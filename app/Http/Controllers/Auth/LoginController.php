@@ -51,7 +51,7 @@ class LoginController extends Controller
 
         $this->_registerOrLoginUser($user);
 
-        return redirect()->route('home');
+        return redirect()->intended('home');
     }
     public function _registerOrLoginUser($data)
     {
