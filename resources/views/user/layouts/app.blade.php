@@ -72,6 +72,11 @@
                                 </div>
                             </li>
                         @endguest
+                        <li class="nav-item">
+                            <i class="fal fa-shopping-bag">item</i>
+                            <span class="badge">{{Session::has('UserRequest') ? Session::get('UserRequest')->totalQty : null}}</span>
+                            
+                            </li>
                     </ul>
                 </div>
             </div>

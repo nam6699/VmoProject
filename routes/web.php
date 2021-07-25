@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\RequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,16 +34,23 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('login/google', [App\Http\Controllers\Auth\LoginController::class, 'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::class, 'handleGoogleCallback']);
 
+//send request
+Route::get('request',[RequestController::class,'getRequest']);
+Route::get('send-request/{id}',[RequestController::class,'addRequest'])->name('send.request');
+Route::get('request/update-request',[RequestController::class,'updateRequest']);
+Route::get('request/remove-request/{id}',[RequestController::class,'removeRquest']);
+
 
 
 
 //admin
-Route::get('/admin', [AdminController::class, 'index']);
+
 Route::get('admin/login', [AdminController::class, 'loginView'])->name('admin.loginView');
 Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login');
 Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
 Route::group(['middleware'=>'checkAdmin'], function(){
+    Route::get('/admin', [AdminController::class, 'index']);
     Route::resource('admin/tool', ToolController::class);
 });
 
