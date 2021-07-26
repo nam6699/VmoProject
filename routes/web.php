@@ -7,6 +7,7 @@ use App\Http\Controllers\ToolController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\RequestController;
+use App\Http\Controllers\UserRequestController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,6 +40,8 @@ Route::get('request',[RequestController::class,'getRequest']);
 Route::get('send-request/{id}',[RequestController::class,'addRequest'])->name('send.request');
 Route::get('request/update-request',[RequestController::class,'updateRequest']);
 Route::get('request/remove-request/{id}',[RequestController::class,'removeRquest']);
+Route::get('request/destroy-request/',[RequestController::class,'destroyRequest'])->name('destroy.request');
+Route::post('request/postCheckout',[RequestController::class,'postCheckout'])->name('request.checkout');
 
 
 
@@ -52,6 +55,7 @@ Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logo
 Route::group(['middleware'=>'checkAdmin'], function(){
     Route::get('/admin', [AdminController::class, 'index']);
     Route::resource('admin/tool', ToolController::class);
+    Route::resource('admin/request', UserRequestController::class);
 });
 
 

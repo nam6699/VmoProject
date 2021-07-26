@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Tool;
 use App\Models\UserRequest;
+use App\Models\RequestDetail;
+use App\Models\Requests;
 use Session;
 use Illuminate\Support\Facades\Validator;
 class RequestController extends Controller
@@ -89,5 +91,42 @@ class RequestController extends Controller
             'status'  => true, // thành công
             'data' => view('user.requests')
         ]);
+    }
+    public function destroyRequest(Request $request)
+    {
+          // remove session
+          $request->session()->forget('UserRequest');
+
+          return redirect('home');
+
+    }
+    public function postCheckout(Request $request)
+    {
+        if(!session('UserRequest'))
+        {
+            return reidrect('home');
+        }
+        $UserRequest =  session('UserRequest');
+
+        $saveRequest = new Requests();
+        $saveRequest->totalQty = $UserRequest->totalQty;
+        $saveRequest->status_id = 1; //new
+        if($saveRequest->save()){
+            $id_request = $saveRequest->id;
+            foreach($UserRequest->items as $item) {
+                $_detail = new RequestDetail();
+                $_detail->user_requests_id = $id_request;
+                $_detail->name = $item['item']->name;
+                $_detail->item_id = $item['item']->id;
+                $_detail->quanity = $item['qty'];
+                $_detail->save();
+
+            }
+        }
+
+        $request->session()->forget('UserRequest');
+        return redirect('home');
+
+
     }
 }

@@ -21,7 +21,8 @@ tr:nth-child(even) {
 </style>
 </head>
 <body>
-
+<form method="post" action="{{ route('request.checkout') }}">
+ @csrf
 <h2>HTML Table</h2>
 <div >
 <table>
@@ -43,7 +44,12 @@ tr:nth-child(even) {
 </tr>
   @endforeach
 </table>
+<div class="returne-continue-shop">
+    <a href="{{ route('destroy.request') }}" class="continueshoping"><i class="fa fa-chevron-left"></i>Cancel</a>
+     <button type="submit" class="procedtocheckout">Send Request</button> 
 </div>
+</div>
+</form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script type="text/javascript">
