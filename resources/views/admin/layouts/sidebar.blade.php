@@ -39,6 +39,12 @@
               <p>Tools Management</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('request.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>Requests Management</p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

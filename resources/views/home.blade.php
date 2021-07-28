@@ -14,6 +14,13 @@
                         </div>
                     @endif
                 </div>
+                <div class="card-body">
+                    @if (session('msg'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('msg') }}
+                        </div>
+                    @endif
+                </div>
                 <div>
                <ul>
                    @foreach($data as $item)

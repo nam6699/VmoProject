@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Requests;
+use App\Models\RequestStatus;
+use App\Models\RequestDetail;
+use App\Models\RequestTool;
+use App\Models\Tool;
 
 class UserRequestController extends Controller
 {
@@ -17,7 +21,10 @@ class UserRequestController extends Controller
 
         $data = Requests::all();
 
-        return view('admin.request.index',['data'=>$data]);
+        return view('admin.request.index',[
+            'data'=>$data,
+            
+        ]);
     }
 
     /**
@@ -61,9 +68,11 @@ class UserRequestController extends Controller
     public function edit($id)
     {
         $request = Requests::find($id);
+        $status = RequestStatus::all();
         return view('admin.request.edit',
         [
-            'data'=>$request
+            'data'=>$request,
+            'status'=>$status
         ]);
     }
 
@@ -76,7 +85,21 @@ class UserRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //dd(RequestDetail::get('item_id'));
+        $id_status = $request->status_id;
+        $UserRequest = Requests::findorFail($id);
+        $UserRequest->status_id = $id_status;
+        $UserRequest->save();
+        if($UserRequest->status_id == 2)
+        {
+            $this->decreaseQuanities($id);
+            return redirect()->back()->with('msg', 'Cập nhật thành công');
+        }else
+        {
+            return redirect()->back()->with('error', 'ban chua accept request');
+        }
+
+        
     }
 
     /**
@@ -87,6 +110,34 @@ class UserRequestController extends Controller
      */
     public function destroy($id)
     {
-        //
+       $tb_request_detail = Requests::find($id)->details;
+       $tb_request_tool = RequestTool::where('user_request_id', $id)->get();
+       foreach($tb_request_detail as $key => $value)
+       {
+        RequestDetail::destroy($tb_request_detail[$key]->id);
+       }
+       foreach($tb_request_tool as $key => $value)
+       {
+        RequestTool::destroy($tb_request_tool[$key]->id);
+       }
+       
+       
+        Requests::destroy($id);
+        
+
+        return redirect()->route('request.index');
     }
-}
+
+    public function decreaseQuanities($id) 
+    {
+        $toolQty = RequestDetail::where('user_requests_id',$id)->get();
+        foreach($toolQty as $value)
+        {
+            $tool = Tool::find($value->item_id);
+            
+            
+            $tool->update(['quanity' => $tool->quanity - $value->quanity]);
+        }
+        
+    }
+}   
