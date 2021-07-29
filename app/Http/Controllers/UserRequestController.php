@@ -85,11 +85,19 @@ class UserRequestController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //dd(RequestDetail::get('item_id'));
+        $toolQty = RequestDetail::where('user_requests_id',$id)->get();
         $id_status = $request->status_id;
         $UserRequest = Requests::findorFail($id);
         $UserRequest->status_id = $id_status;
         $UserRequest->save();
+        foreach($toolQty as $value)
+        {
+            $tool = Tool::find($value->item_id);
+            if($value->quanity > $tool->quanity)
+            {
+                return redirect()->back()->with('error', 'Khong con du so luon trong kho');
+            }
+        }
         if($UserRequest->status_id == 2)
         {
             $this->decreaseQuanities($id);

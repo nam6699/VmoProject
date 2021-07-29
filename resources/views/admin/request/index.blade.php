@@ -25,7 +25,7 @@
                 @endif
             </td>
             <td>
-              <a href="{{route('request.edit', ['request'=>$value->id])}}" class="btn btn-primary">Edit</a>
+              <a href="{{route('request.edit', ['request'=>$value->id])}}" class="btn btn-primary">Detail</a>
             </td>
             <td>
                   <form method="post" action="{{route('request.destroy',['request'=>$value->id])}}">

@@ -9,6 +9,7 @@ use App\Models\RequestDetail;
 use App\Models\Requests;
 use App\Models\RequestTool;
 use Session;
+use App\Jobs\SendEmail;
 use Illuminate\Support\Facades\Validator;
 class RequestController extends Controller
 {
@@ -137,10 +138,25 @@ class RequestController extends Controller
                 $request_tool->save();
             }
         }
-
+        //send email
+        $request->validate([
+            'email' => 'required|email',
+            'subject' => 'required',
+            'name' => 'required',
+            'content' => 'required',
+          ]);
+  
+          $data = [
+            'subject' => $request->subject,
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $request->content
+          ];
+          SendEmail::dispatch($data);
+  
+         
+  
         $request->session()->forget('UserRequest');
-        return redirect('home');
-
-
+        return redirect('home')->with(['msg' => 'Request successfully sent!']);
     }
 }

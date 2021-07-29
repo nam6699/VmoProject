@@ -100,8 +100,16 @@
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge"></span>
         </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="{{route('admin.logout')}}" class="dropdown-item dropdown-footer">Logout</a>
+        <div class="">
+        <a class="dropdown-item" href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+            {{ __('Logout') }}
+        </a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+              @csrf
+              <input type="submit" value="logout">
+        </form>
         </div>
       </li>
       <li class="nav-item">

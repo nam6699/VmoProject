@@ -47,7 +47,7 @@
                         @csrf
                         @method('PUT')
                         <div class="box-header with-border">
-                            <button type="submit" class="btn btn-info btn-flat">
+                            <button id="button-disable" type="submit" class="btn btn-info btn-flat">
                                 <i class="fa fa-edit"></i>
                                 Cập nhật
                             </button>
@@ -95,10 +95,10 @@
                                     </td>
                                     <td><label>Trạng thái ĐH</label></td>
                                     <td style="color: red">
-                                        <select class="form-control " name="status_id" style="max-width: 150px;display: inline-block;">
+                                        <select class="form-control" id="select-disable" name="status_id" style="max-width: 150px;display: inline-block;">
                                             <option value="0">-- chọn --</option>
                                             @foreach($status as $status)
-                                                <option {{ ($data->status_id == $status->id ? 'selected':'') }} value="{{ $status->id }}">{{ $status->name }}</option>
+                                                <option {{ ($data->status_id == $status->id ? 'selected':'') }} value="{{ $status->id }}">{{ $status->name }}</option>   
                                             @endforeach
                                         </select>
                                     </td>
@@ -165,4 +165,16 @@
         <!-- /.row -->
     </section>
 
+@endsection
+
+@section('my_javascript')
+<script type="text/javascript">
+        $(document).ready(function() {
+             var conceptName =$('#select-disable').find(":selected").text();
+            if(conceptName=='accepted'){
+            document.getElementById("select-disable").disabled = true ;
+            document.getElementById("button-disable").disabled = true
+            }
+        });
+    </script>
 @endsection

@@ -4,14 +4,8 @@
         $item = $UserRequest->items;
         $totalQty = $UserRequest->totalQty;
     @endphp
-
-
-
-   
-<form method="post" action="{{ route('request.checkout') }}">
- @csrf
-<h2>HTML Table</h2>
-<table>
+<div class="container-lg">
+<table class="contact-form">
   <tr>
     <th>name</th>
     <th>quanity</th>
@@ -34,12 +28,7 @@
 </tr>
   @endforeach
 </table>
-<div class="returne-continue-shop">
-    <a href="{{ route('destroy.request') }}" class="continueshoping"><i class="fa fa-chevron-left"></i>Cancel</a>
-     <button type="submit" class="procedtocheckout">Send Request</button> 
 </div>
-</div>
-</form>
 @section('my_javascript')
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
 <script type="text/javascript">

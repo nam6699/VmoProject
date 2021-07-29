@@ -47,21 +47,14 @@ Route::post('request/postCheckout',[RequestController::class,'postCheckout'])->n
 
 
 //admin
-
-Route::get('admin/login', [AdminController::class, 'loginView'])->name('admin.loginView');
-Route::post('admin/login', [AdminController::class, 'login'])->name('admin.login');
-Route::get('admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
-
-Route::group(['middleware'=>'checkAdmin'], function(){
+Route::group(['middleware'=>'auth'], function(){
     Route::get('/admin', [AdminController::class, 'index']);
     Route::resource('admin/tool', ToolController::class);
     Route::resource('admin/request', UserRequestController::class);
 });
 
 
-//routes for mailing
-Route::get('/email', [EmailController::class,'create']);
-Route::post('/email', [EmailController::class,'sendEmail'])->name('send.email');
+
         
         
 
