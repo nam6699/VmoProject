@@ -1,5 +1,7 @@
+@can('edit tools')
 @extends('admin.layouts.main')
 @section('content')
+
 <div class="container">
 <form method="post" action="{{route('tool.store')}}" enctype="multipart/form-data">
     @csrf
@@ -18,6 +20,5 @@
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
-
-
 @endsection
+@endcan

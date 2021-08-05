@@ -1,7 +1,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="{{asset('images/download.png')}}" class="img-circle" width=220 style="opacity: .8">
     </a>
 
     <!-- Sidebar -->
@@ -45,6 +45,22 @@
               <p>Requests Management</p>
             </a>
           </li>
+          @role('super admin')
+          <li class="nav-item">
+            <a href="{{route('user.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>Users Management</p>
+            </a>
+          </li>
+          @endrole
+          @role('super admin')
+          <li class="nav-item">
+            <a href="{{route('role.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>Roles Management</p>
+            </a>
+          </li>
+         @endrole
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

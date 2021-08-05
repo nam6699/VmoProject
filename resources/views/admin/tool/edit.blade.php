@@ -1,3 +1,4 @@
+@can('edit tools')
 @extends('admin.layouts.main')
 @section('content')
 <div class="container">
@@ -26,3 +27,4 @@
 
 
 @endsection
+@endcan

@@ -24,7 +24,7 @@
             <div class="alert alert-success alert-dismissible" style="" id="thongbao">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                 <h4><i class="icon fa fa-check"></i> Thông báo !</h4>
-                {{ session('msg') }}
+        {{ session('msg') }}
             </div>
         </div>
     @endif
@@ -47,67 +47,51 @@
                         @csrf
                         @method('PUT')
                         <div class="box-header with-border">
-                            <button id="button-disable" type="submit" class="btn btn-info btn-flat">
+                            @if($data->status_id == 1)
+                            <button id="button-disable" name="status_id" value="2" type="submit" class="btn btn-info btn-flat">
                                 <i class="fa fa-edit"></i>
-                                Cập nhật
+                                Approve
                             </button>
+                            <button id="button-disable" type="submit" name="status_id" value="4" class="btn btn-info btn-flat">
+                                <i class="fa fa-edit"></i>
+                                Cancel
+                            </button>
+                            @elseif($data->status_id == 5)
+                            <button id="button-disable" name="status_id" value="3" type="submit" class="btn btn-info btn-flat">
+                                <i class="fa fa-edit"></i>
+                                Done
+                            </button>
+                            @endif
                         </div>
                         <div class="box-body">
                             <table class="table table-bordered">
                                 <tbody>
-                                <tr>
-                                    <td><label for="">Mã ĐH :</label></td>
-                                    <td></td>
-                                    <td><label>Ngày Đặt Hàng:</label></td>
-                                    <td></td>
-                                </tr>
+                                
                                 <tr>
                                     <td><label for="">Họ tên :</label></td>
-                                    <td></td>
-                                    <td><label>Mã giảm giá</label></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td><label>SĐT :</label> </td>
-                                    <td></td>
-                                    <td><label>Tạm tính</label></td>
-                                    <td></td>
+                                    <td>{{$data->user->name}}</td>
+                                    <td><label>Status</label></td>
+                                    @foreach($status as $item)
+                                            @if($data->status_id == $item->id)
+                                            <td><label class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label></td>
+                                            @endif
+                                    @endforeach
                                 </tr>
                                 <tr>
                                     <td><label>Email :</label></td>
-                                    <td></td>
-                                    <td><label>Khuyến mại</label></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td><label>Địa chỉ :</label> </td>
-                                    <td colspan=""></td>
-                                    <td><label>Thành tiền</label></td>
-                                    <td style="color: red"></td>
-
-                                </tr>
-                                <tr>
-                                    <td><label>Địa chỉ nhận hàng :</label> </td>
-                                    <td colspan="">
-                                        <div class="form-group">
-                                            <input class="form-control" name="address2" value="">
-                                        </div>
-                                    </td>
-                                    <td><label>Trạng thái ĐH</label></td>
-                                    <td style="color: red">
-                                        <select class="form-control" id="select-disable" name="status_id" style="max-width: 150px;display: inline-block;">
-                                            <option value="0">-- chọn --</option>
-                                            @foreach($status as $status)
-                                                <option {{ ($data->status_id == $status->id ? 'selected':'') }} value="{{ $status->id }}">{{ $status->name }}</option>   
-                                            @endforeach
-                                        </select>
-                                    </td>
+                                    <td>{{$data->user->email}}</td>
+                                    <td><label>Total Quanity</label></td>
+                                    <td>{{$data->totalQty}}</td>
                                 </tr>
                                 <tr>
                                     <td><label>Ghi chú :</label> </td>
                                     <td colspan="3">
                                         <div class="form-group">
-                                            <textarea name="note" class="form-control" rows="3" placeholder=""></textarea>
+                                            <textarea name="note" class="form-control" rows="3"  placeholder="" value="{{$data->note}}">
+                                                @if(isset($data->note))
+                                                {{$data->note}}
+                                                @endif
+                                            </textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -167,14 +151,3 @@
 
 @endsection
 
-@section('my_javascript')
-<script type="text/javascript">
-        $(document).ready(function() {
-             var conceptName =$('#select-disable').find(":selected").text();
-            if(conceptName=='accepted'){
-            document.getElementById("select-disable").disabled = true ;
-            document.getElementById("button-disable").disabled = true
-            }
-        });
-    </script>
-@endsection

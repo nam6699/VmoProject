@@ -8,28 +8,33 @@ use App\Models\UserRequest;
 use App\Models\RequestDetail;
 use App\Models\Requests;
 use App\Models\RequestTool;
+use Illuminate\Support\Facades\DB;
 use Session;
+use Auth;
 use App\Jobs\SendEmail;
 use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use App\Models\RequestStatus;
+use App\Notifications\UpdateRequestStatus;
 class RequestController extends Controller
+
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function addRequest(Request $request, $id)
     {
+        
         $tool = Tool::find($id);
         $oldRequest = Session::has('UserRequest') ? Session::get('UserRequest') : null;
+        
         if(!empty(session()->get('UserRequest')->items[$id]['qty'])){
-            $toolsQuanity[] = session()->get('UserRequest')->items[$id]['qty'];
-            if($toolsQuanity['0'] >= $tool->quanity){
+            $toolsQuanity['qty'] = session()->get('UserRequest')->items[$id]['qty'];
+            if($toolsQuanity['qty'] >= $tool->quanity){
                 return redirect()->back()->with('msg','not enough quanity available');
             }
         }
         $UserRequest = new UserRequest($oldRequest);
         $UserRequest->add($tool, $tool->id);
         $request->session()->put('UserRequest', $UserRequest);
+        //dd(session('UserRequest'));
         return redirect('request');
 
     }
@@ -112,51 +117,104 @@ class RequestController extends Controller
         {
             return redirect('home');
         }
+       
         $UserRequest =  session('UserRequest');
+        
+        foreach($UserRequest->items as $item)
+        {
+            $qty = Tool::find($item['item']->id);
+            if($item['qty'] > $qty->quanity)
+                {
+                    return redirect()->route('request')->with(['msg' => 'not enough quanity']);
 
-        $saveRequest = new Requests();
-        $saveRequest->totalQty = $UserRequest->totalQty;
-        $saveRequest->status_id = 1; //new
-        if($saveRequest->save()){
-            $id_request = $saveRequest->id;
-            foreach($UserRequest->items as $item) {
-                
-                $_detail = new RequestDetail();
-                $_detail->user_requests_id = $id_request;
-                $_detail->name = $item['item']->name;
-                $_detail->item_id = $item['item']->id;
-                $_detail->quanity = $item['qty'];
-                $_detail->image = $item['item']->image;
-                $_detail->save();
-
-            }
-            foreach($UserRequest->items as $item)
-            {
-                $request_tool = new RequestTool();
-                $request_tool->tool_id = $item['item']->id;
-                $request_tool->user_request_id = $id_request;
-                $request_tool->save();
-            }
+                }
         }
-        //send email
-        $request->validate([
-            'email' => 'required|email',
-            'subject' => 'required',
-            'name' => 'required',
-            'content' => 'required',
-          ]);
-  
-          $data = [
-            'subject' => $request->subject,
-            'name' => $request->name,
-            'email' => $request->email,
-            'content' => $request->content
-          ];
-          SendEmail::dispatch($data);
-  
-         
-  
-        $request->session()->forget('UserRequest');
-        return redirect('home')->with(['msg' => 'Request successfully sent!']);
+                    DB::transaction(function () use($UserRequest, $request) {
+                    $saveRequest = new Requests();
+                    $saveRequest->user_email = Auth::user()->email;
+                    $saveRequest->totalQty = $UserRequest->totalQty;
+                    $saveRequest->status_id = 1; //new
+                    $saveRequest->user_id = Auth::user()->id;
+                    if($saveRequest->save()){
+                        $id_request = $saveRequest->id;
+                        foreach($UserRequest->items as $item) {
+                            
+                            $_detail = new RequestDetail();
+                            $_detail->user_requests_id = $id_request;
+                            $_detail->name = $item['item']->name;
+                            $_detail->item_id = $item['item']->id;
+                            $_detail->quanity = $item['qty'];
+                            $_detail->image = $item['item']->image;
+                            $_detail->save();
+            
+                        }
+                        foreach($UserRequest->items as $item)
+                        {
+                            $request_tool = new RequestTool();
+                            $request_tool->tool_id = $item['item']->id;
+                            $request_tool->user_request_id = $id_request;
+                            $request_tool->save();
+                        }
+                    }
+                     //send email
+                    $request->validate([
+                        'email' => 'required|email',
+                        'subject' => 'required',
+                        'name' => 'required',
+                        'content' => 'required',
+                    ]);
+            
+                    $data = [
+                        'subject' => $request->subject,
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'content' => $request->content
+                    ];
+                    SendEmail::dispatch($data);
+                    $request->session()->forget('UserRequest');
+                    });
+       
+        return redirect()->route('show.request',['id'=>Auth::user()->id])->with(['msg' => 'Request successfully sent!']);
+    }
+    public function showRequest($id)
+    {
+        $status = RequestStatus::all();
+        $data = User::find($id);
+        return view('user.show',[
+            'data'=>$data,
+            'status'=>$status
+        ]);
+    }
+    public function detailRequest($id)
+    {
+       $data = Requests::find($id);
+       $status = RequestStatus::all();
+
+       return view('user.detail-request',
+       [
+           'data' => $data,
+           'status' => $status
+       ]);
+    }
+    public function updateStatusRequest(Request $request, $id)
+    {
+        $id_status = $request->status_id;
+        $UserRequest = Requests::findorFail($id);
+        DB::transaction(function () use($UserRequest,$id_status, $id) {
+        $UserRequest->status_id = $id_status;
+         if($UserRequest->save()){
+             $user = User::find(35);
+             
+             $enrollmentData = [
+                'body'=>'You recived the notification',
+                'enrollmentText'=>'you are allowed to enroll',
+                'url'=>url('admin/request'),
+                'thank you'=>'thank you'
+             ];
+             $user->notify(new UpdateRequestStatus($enrollmentData));
+         }
+        });
+        return redirect()->back()->with('msg','return success');
+        
     }
 }

@@ -11,6 +11,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    
+    
+    
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,12 +21,13 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/mycss.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -55,36 +59,38 @@
                             <li class="nav-item dropdown">
                             <img src="{{ Auth::user()->avatar }}" alt="{{ Auth::user()->name }}"
                                  style="border: 1px solid #cccccc; border-radius: 5px; width: 39px; height: auto;float:left; margin-right: 7px;">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
-
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
                                 </div>
                             </li>
                         @endguest
-                        <li class="nav-item">
-                            <i class="fal fa-shopping-bag">item</i>
-                            <span class="badge">{{Session::has('UserRequest') ? Session::get('UserRequest')->totalQty : null}}</span>
-                            
-                            </li>
                     </ul>
                 </div>
             </div>
+            @isset(Auth::user()->id)
+            <h4><a href="{{ route('show.request', Auth::user()->id ) }}" class="badge badge-secondary">Show Request</a></h4>
+            @endif
+            <h4><a href="{{ route('request') }}" class="badge badge-secondary">Your Request</a></h4>
+            <h4><span class="badge">{{Session::has('UserRequest') ? Session::get('UserRequest')->totalQty : null}}</span></h4>
         </nav>
-
         <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+@yield('my_javascript')
 </html>

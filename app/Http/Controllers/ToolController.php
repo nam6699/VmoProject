@@ -14,8 +14,8 @@ class ToolController extends Controller
      */
     public function index()
     {
-        $data = Tool::all();
-        return view('admin.tool.index',['data'=>$data]);
+        $data = Tool::paginate(10);
+        return view('admin.tool.index',['tool'=>$data]);
     }
 
     /**
@@ -118,10 +118,22 @@ class ToolController extends Controller
      */
     public function destroy($id)
     {
-
         
         Tool::destroy($id);
+        return response()->json([
+            'status'  => true, // thành công
+        ]);
+    }
+    public function search(Request $request) 
+    {
+        $searchTool = $request->get('search');
+        if($searchTool){
+        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(10);
 
-        return redirect()->route('tool.index');
+        return view('admin.tool.search',['data'=>$tool]);
+        }else{
+
+            return redirect()->route('tool.index');
+        }
     }
 }

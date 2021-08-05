@@ -57,14 +57,18 @@ class LoginController extends Controller
     public function _registerOrLoginUser($data)
     {
         $user = User::where('email','=',$data->email)->first();
-        if(!$user) {    
-            $user = new User();
-            $user->name = $data->name;
-            $user->email = $data->email;
-            //$user->provider_id = $data->_id;
-            $user->avatar = $data->avatar;
-            $user->save();
+        // if(!$user) {    
+        //     $user = new User();
+        //     $user->name = $data->name;
+        //     $user->email = $data->email;
+        //     //$user->provider_id = $data->_id;
+        //     $user->avatar = $data->avatar;
+        //     $user->save();
+        // }
+        if(isset($user))
+        {
+            Auth::login($user);
         }
-        Auth::login($user);
+        
     }
 }
