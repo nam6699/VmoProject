@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="{{ asset('css/landingpage.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -15,13 +16,11 @@
         </style>
 
         <style>
-            body {
-                font-family: 'Nunito', sans-serif;
-            }
+           
         </style>
     </head>
-    <body class="antialiased">
-    @if (session('msg'))
+    <body>
+    <!-- @if (session('msg'))
             <div class="alert alert-success" role="alert">
                 {{ session('msg') }}
             </div>
@@ -39,7 +38,12 @@
                         @endif
                     @endauth
                 </div>
-            @endif
-
+            @endif -->
+    
+       <header id="showcase">
+           <h1>Welcome To The VmoTools</h1>
+           <p>A place to get anything you want</p>
+            <a href="{{ route('login') }}" class="button">Login</a>
+       </header>    
     </body>
 </html>

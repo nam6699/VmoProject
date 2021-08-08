@@ -139,29 +139,28 @@ class UserRequestController extends Controller
         {
             
             $tool = Tool::find($value->item_id);
-            
-                if($value->quanity > $tool->quanity)
+            if(!empty($tool)){
+                if($value->quanity > $tool->quanity )
                 {
-                $UserRequest->status_id = 1;
-                $UserRequest->save();
-                return redirect()->back()->with('error', 'Khong con du so luon trong kho');
+                    $UserRequest->status_id = 1;
+                    $UserRequest->save();
+                    return redirect()->back()->with('error', 'Khong con du so luon trong kho');
                 }else{
                 DB::transaction(function () use($UserRequest, $id, $request, $value) {
-                $UserRequest->status_id = $request->status_id;
-                $UserRequest->note = $request->note;
-                $UserRequest->save();
-                    if($UserRequest->status_id == 2)
-                    { 
-                    $this->decreaseQuanities($id);
-                    }
+                    $UserRequest->status_id = $request->status_id;
+                    $UserRequest->note = $request->note;
+                    $UserRequest->save();
+                        if($UserRequest->status_id == 2)
+                        { 
+                        $this->decreaseQuanities($id);
+                        }
                 });
                 return redirect()->back()->with('msg', 'Cập nhật thành công');
                 }
-
+            }
             
             return redirect()->back()->with('error', 'Khong co san pham');
-            
-            
+              
         }
     
         
@@ -204,8 +203,6 @@ class UserRequestController extends Controller
             if(isset($tool)){
                 $tool->update(['quanity' => $tool->quanity + $value->quanity]);
             }
-            
-            return back()->with('error','khong co tools');
             
         }
     }

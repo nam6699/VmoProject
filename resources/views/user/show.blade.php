@@ -61,7 +61,7 @@
 @endsection 
 @section('my_javascript')
 <script>
-     var pathname = window.location.pathname; // 
+          var pathname = window.location.pathname; // 
           var urlParams = new URLSearchParams(window.location.search); // khoi tao
           $(document).on("change", '#statusId', function () {
                 var status = $(this).val();

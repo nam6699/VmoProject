@@ -255,9 +255,10 @@ p {
 {
     border: 1px solid #FF7200;
     margin: 65px;
-    border-radius: 5px;
+    border-radius: 20px;
     
 }
+
 .card-items:hover
 {
     transform: translateY(-15px);
@@ -272,6 +273,15 @@ p {
 {
     background:#FF7200;
     color:#fff;
+}
+.contact li{
+   font-family: 'Open-sans',sans-serif;
+   font-size: 0.875rem;
+  
+}
+
+.custom{
+    width : 150px !important;
 }
 
 /* MEDIA QUERIES */

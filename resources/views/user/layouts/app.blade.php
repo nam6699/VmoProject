@@ -93,15 +93,17 @@
      <div class="row">
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <h4>Contact Us</h4>
-        <ul>
-          <li><i class="fa fa-phone"></i></li>
-          <li><i class="fa fa-envelope"></i></li>
-          <li><i class="fa fa-map"></i></li>
+        <ul class="contact">
+          <li><i class="fa fa-phone"> 024 3312 0103</i></li>
+          <li><i class="fa fa-envelope"> info@vmogroup.com</i></li>
+          <li><i class="fa fa-map"> 15th Floor, TTC Tower,
+                  19 Duy Tan st., Dich Vong Hau ward., Cau Giay dist.,
+                  Hanoi</i></li>
         </ul>
        </div>
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <h4>About Us</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa.</p>
+        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae sequi, delectus velit eos eius beatae.</p>
        </div>
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <h4>NewsLetter</h4>

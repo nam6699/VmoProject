@@ -1,18 +1,15 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{asset('images/download.png')}}" class="img-circle" width=220 style="opacity: .8">
+    <a href="{{url('home')}}" class="brand-link">
+    <h1><span class="primary-text">Vmo</span>Tools</h1>
     </a>
 
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ Auth::user()->avatar }}" class="img-circle elevation-2" alt="User Image">
-        </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <a href="#" class="d-block text-uppercase">{{ Auth::user()->name }}</a>
         </div>
       </div>
 
