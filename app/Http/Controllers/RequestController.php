@@ -28,7 +28,7 @@ class RequestController extends Controller
         if(!empty(session()->get('UserRequest')->items[$id]['qty'])){
             $toolsQuanity['qty'] = session()->get('UserRequest')->items[$id]['qty'];
             if($toolsQuanity['qty'] >= $tool->quanity){
-                return redirect()->back()->with('msg','not enough quanity available');
+                return redirect()->back()->with('error','not enough quanity available');
             }
         }
         $UserRequest = new UserRequest($oldRequest);
@@ -45,6 +45,8 @@ class RequestController extends Controller
             $RequestItem = new UserRequest($oldRequest);
             
             return view('user.requests',['item'=>$RequestItem->items]);
+        }else{
+            return view('user.notfound');
         }
     }
     public function updateRequest(Request $request)
@@ -123,7 +125,7 @@ class RequestController extends Controller
         foreach($UserRequest->items as $item)
         {
             $qty = Tool::find($item['item']->id);
-            if($item['qty'] > $qty->quanity)
+                if(empty($qty) || $item['qty'] > $qty->quanity)
                 {
                     return redirect()->route('request')->with(['msg' => 'not enough quanity']);
 
@@ -135,6 +137,7 @@ class RequestController extends Controller
                     $saveRequest->totalQty = $UserRequest->totalQty;
                     $saveRequest->status_id = 1; //new
                     $saveRequest->user_id = Auth::user()->id;
+                    $saveRequest->receiver_email = $request->email;
                     if($saveRequest->save()){
                         $id_request = $saveRequest->id;
                         foreach($UserRequest->items as $item) {
@@ -152,7 +155,7 @@ class RequestController extends Controller
                         {
                             $request_tool = new RequestTool();
                             $request_tool->tool_id = $item['item']->id;
-                            $request_tool->user_request_id = $id_request;
+                            $request_tool->user_requests_id = $id_request;
                             $request_tool->save();
                         }
                     }
@@ -176,19 +179,64 @@ class RequestController extends Controller
        
         return redirect()->route('show.request',['id'=>Auth::user()->id])->with(['msg' => 'Request successfully sent!']);
     }
-    public function showRequest($id)
+    public function showRequest(Request $request,$id)
     {
+        //dd($request->query('status'));
         $status = RequestStatus::all();
-        $data = User::find($id);
-        return view('user.show',[
-            'data'=>$data,
-            'status'=>$status
-        ]);
+        if(!empty($request->query('status'))) {
+            if($request->query('status') == 1) {
+                $data = Requests::where(['user_id' => $id,'status_id'=>1])->get();
+                return view('user.show',[
+                    'data'=>$data,
+                    'status'=>$status,
+                    'filter'=>$request->query('status')
+                ]);
+            }else if($request->query('status') == 2) {
+                $data = Requests::where(['user_id' => $id,'status_id'=>2])->get();
+                return view('user.show',[
+                    'data'=>$data,
+                    'status'=>$status,
+                    'filter'=>$request->query('status')
+                ]);
+            }else if($request->query('status') == 3) {
+                $data = Requests::where(['user_id' => $id,'status_id'=>3])->get();
+                return view('user.show',[
+                    'data'=>$data,
+                    'status'=>$status,
+                    'filter'=>$request->query('status')
+                ]);
+            }else if($request->query('status') == 4) {
+                $data = Requests::where(['user_id' => $id,'status_id'=>4])->get();
+                return view('user.show',[
+                    'data'=>$data,
+                    'status'=>$status,
+                    'filter'=>$request->query('status')
+                ]);
+            }else if($request->query('status') == 5) {
+                $data = Requests::where(['user_id' => $id,'status_id'=>5])->get();
+                return view('user.show',[
+                    'data'=>$data,
+                    'status'=>$status,
+                    'filter'=>$request->query('status')
+                ]);
+            }
+
+        }else{
+            
+            $data = Requests::where(['user_id' => $id])->paginate(5);
+            return view('user.show',[
+                'data'=>$data,
+                'status'=>$status,
+                'filter'=>$request->query('status')
+            ]);
+        }
+       
     }
-    public function detailRequest($id)
+    public function detailRequest( $id)
     {
        $data = Requests::find($id);
        $status = RequestStatus::all();
+       
 
        return view('user.detail-request',
        [
@@ -203,15 +251,18 @@ class RequestController extends Controller
         DB::transaction(function () use($UserRequest,$id_status, $id) {
         $UserRequest->status_id = $id_status;
          if($UserRequest->save()){
-             $user = User::find(35);
-             
+             $user = User::role('admin')->get(); 
              $enrollmentData = [
                 'body'=>'You recived the notification',
                 'enrollmentText'=>'you are allowed to enroll',
                 'url'=>url('admin/request'),
                 'thank you'=>'thank you'
              ];
-             $user->notify(new UpdateRequestStatus($enrollmentData));
+             foreach($user as $value){
+                 do{
+                    $value->notify(new UpdateRequestStatus($enrollmentData));
+                 }while($value->email == $UserRequest->email);                    
+             }
          }
         });
         return redirect()->back()->with('msg','return success');

@@ -1,5 +1,10 @@
 body {
-    background-color: #f9f9fa
+    background-color: #f9f9fa;
+    font-family:'Open-sans',sans-serif;
+    font-size:17px;
+    line-height:1.5em;
+    margin:0px;
+    padding: 0;
 }
 
 .flex {
@@ -105,4 +110,182 @@ p {
     line-height: 1;
     padding: .375rem .5625rem;
     font-weight: normal
+}
+.search 
+{
+    width:500px;
+    margin:auto;
+}
+
+.request_status
+{
+    width:250px;
+    
+}
+.top-filter
+{
+    display: flex;
+    justify-content: space-between;
+}
+#page-content
+{
+    height:550px ;
+}
+.container
+{
+    margin: auto;
+}
+/* Common class */
+.primary-text
+{
+    color:#FF7200;
+}
+.primary-background
+{
+    color:#FF7200;
+}
+
+/* Header */
+#main-header
+{
+    z-index: 1;
+    background:#fff;
+    border-bottom: 1px solid #FF7200;
+}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+
+/* NAVBAR */
+
+#navbar
+{
+    text-transform:uppercase;
+
+}
+#navbar li
+{
+    display: inline;
+    padding-right: 20px;
+    list-style:none;
+}
+#navbar a
+{
+    text-decoration: none;
+    color:#888;
+}
+#navbar li.current a, #navbar a:hover
+{
+    color:#FF7200;
+    border-bottom: 3px solid #FF7200;
+    padding-bottom:3px;
+}
+/* SHOWCASE */
+#showcase{
+    background:url('https://cdn.nhanlucnganhluat.vn/uploads/images/86F99072/logo/2021-06/159623984_3090563774380252_2533018987896689291_n.jpg') no-repeat center center;
+    border-bottom: 1px solid #FF7200;
+    margin-bottom:30px;
+}
+#showcase .row
+{
+    height:600px;
+}
+#showcase h1
+{
+    font-size:50px;
+    margin:0;
+    padding-bottom:20px;
+
+}
+#showcase p
+{
+    color: #ccc;
+    margin:0;
+}
+#showcase .showcase-content
+{
+    background:#333;
+    color:#fff;
+    border-radius:90px;
+    padding:40px;
+    opacity:0.9;
+}
+
+/* FEATURE */
+#features h2
+{
+    font-size:35px;
+    margin:0;
+    padding-bottom: 20px;
+    padding-top: 40px;
+}
+
+#company 
+{
+    background:#333;
+    color:#fff;
+    padding: 10px 0px;
+}
+#company h4
+{
+    text-transform: uppercase;
+    margin-bottom: 0;
+}
+#company ul
+{
+    padding:0;
+    list-style:none;
+    line-height:2em;
+}
+#company input[type="text"]
+{
+    padding:7px;
+}
+#company button
+{
+    background:#222;
+    color:#fff;
+    padding:10px;
+    border:0;
+}
+.card-items
+{
+    border: 1px solid #FF7200;
+    margin: 65px;
+    border-radius: 5px;
+    
+}
+.card-items:hover
+{
+    transform: translateY(-15px);
+    transition: transform .3s;
+}
+.button-add
+{
+    background:#FF7200;
+}
+/* FOOTER */
+#main-footer 
+{
+    background:#FF7200;
+    color:#fff;
+}
+
+/* MEDIA QUERIES */
+@media(max-width:800px)
+{
+    #showcase h1{
+        font-size:30px;
+
+    }
+}
+@media(max-width:500px)
+{
+    #showcase .showcase-content{
+        padding:40px 10px;
+        
+    }
 }

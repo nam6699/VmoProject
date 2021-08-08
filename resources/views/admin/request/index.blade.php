@@ -1,6 +1,17 @@
 @extends('admin.layouts.main')
 @section('content')
+<div class="request_status" style="width:100px;">
+  <select name="" id="statusId" class="form-control">
+   
+      <option {{( $filter == ''  ? 'selected' : '') }} value="0">all</option>
+      <option {{( $filter == '1' ? 'selected' : '') }} value="1">New</option>
+      <option {{( $filter == '2' ? 'selected' : '') }} value="2">Accepted</option>
+      <option {{( $filter == '3' ? 'selected' : '') }} value="3">Finished</option>
+      <option {{( $filter == '4' ? 'selected' : '') }} value="4">Cancel</option>
+      <option {{( $filter == '5' ? 'selected' : '') }} value="5">Returning</option>
+  </select>
 
+</div>
           <table class="table">
         <thead>
           <tr>
@@ -12,7 +23,7 @@
         </thead>
         <tbody>
           @foreach($data as $value)
-          <tr class="request-{{ $value->id }}">
+          <tr id="my-table" class="request-{{ $value->id }}">
             <td>{{$value->id}}</td>
             <td>{{$value->user_email}}</td>
             <td>{{$value->totalQty}}</td>
@@ -31,13 +42,15 @@
             </td>
             <td>
               <a href="{{route('request.edit', ['request'=>$value->id])}}" class="btn btn-primary">Detail</a>
-              <a data-id="{{$value->id }}" href="javascript:void(0)" class="remove-to-cart btn btn-danger" class="text-dark">delete</a>
+              <a data-id="{{$value->id }}" href="javascript:void(0)" class="remove-to-cart btn btn-danger">delete</a>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      @if($filter == 0)
       {{ $data->links() }}
+      @endif
           <!-- /.content -->
         <!-- /.content-wrapper -->
 
@@ -46,12 +59,11 @@
 
 @section('my_javascript')
 <script type="text/javascript">
-
+     
         $(function () {
-    
-          // xóa sản phẩm khỏi giỏ hàng
+          // xóa sản phẩm khỏi request
             $(document).on("click", '.remove-to-cart', function () {
-                var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng ?");
+                var result = confirm("Bạn có chắc chắn muốn xóa ?");
                 if (result) {
                     var id = $(this).attr('data-id');
                     $.ajax({
@@ -77,5 +89,18 @@
                 }
             });
           })
+          var pathname = window.location.pathname; // 
+          var urlParams = new URLSearchParams(window.location.search); // khoi tao
+          $(document).on("change", '#statusId', function () {
+                var status = $(this).val();
+                if (status) {
+                  if (status == '0') {
+                    urlParams.delete('status');
+                  } else {
+                    urlParams.set('status', status);
+                  }
+                  window.location.href = pathname + "?"+decodeURIComponent(urlParams.toString());
+                }
+            });
     </script>
     @endsection

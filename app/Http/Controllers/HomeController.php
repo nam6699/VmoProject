@@ -7,6 +7,7 @@ use App\Models\Tool;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 class HomeController extends Controller
 {
     /**
@@ -40,16 +41,12 @@ class HomeController extends Controller
             return view('admin.dashboard');
         }elseif(Auth::user()->hasRole('user'))
         {
-            $data = Tool::all();
+            $data = Tool::paginate(9);
         
             return view('home',['data'=>$data]);
-        }else
-        {
+        }else{
             
-            echo "cannot log in";
-            $user = Auth::user();
-            Auth::logout($user);
-            return redirect('/')->with('msg', 'u cannot log in');
+            
         }
        
     }
@@ -58,7 +55,7 @@ class HomeController extends Controller
         
         $searchTool = $request->get('searchInput');
         if($searchTool){
-        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->get();
+        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(9);
         return view('user.search.toolSearch',['data'=>$tool]);
         }else{
             return redirect()->route('home');

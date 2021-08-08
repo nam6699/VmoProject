@@ -10,6 +10,7 @@
                         </div>
                     @endif
                     {!! $content !!}
+                    <a href="http://127.0.0.1:8000/admin/request">button</a>
                 </div>
             </div>
         </div>

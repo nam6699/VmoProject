@@ -63,10 +63,6 @@
                       url: " admin/user/" + id,
                         success: function (response) {
                         console.log(response);
-                        // success <button id="button-disable" type="submit" name="status_id" value="4" class="btn btn-info btn-flat">
-                                <i class="fa fa-edit"></i>
-                                Cancel
-                            </button>
                           if (response.status != 'undefined' && response.status == true) {
                           // xóa dòng vừa được click delete
                           $('.user-'+id).closest('tr').remove(); // class .item- ở trong class của thẻ td đã khai báo trong file index

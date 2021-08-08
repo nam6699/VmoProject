@@ -16,15 +16,50 @@ class UserRequestController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-
-        $data = Requests::paginate(10);
-
-        return view('admin.request.index',[
-            'data'=>$data,
-            
-        ]);
+        if(!empty($request->query('status'))) {
+           
+            if($request->query('status') == 1){
+                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+               
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>$request->query('status')
+            ]);
+            }else if($request->query('status') == 2){
+                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>$request->query('status')
+            ]);
+            }else if($request->query('status') == 3){
+                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>$request->query('status')
+            ]);
+            }else if($request->query('status') == 4){
+                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>$request->query('status')
+            ]);
+            }else if($request->query('status') == 5){
+                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>$request->query('status')
+            ]);
+            }
+        }else{
+            $data = Requests::paginate(10);
+                return view('admin.request.index',[
+                'data'=>$data,
+                'filter'=>0
+            ]);
+        }
+              
     }
 
     /**
@@ -56,7 +91,7 @@ class UserRequestController extends Controller
      */
     public function show($id)
     {
-        //
+       
     }
 
     /**
@@ -105,23 +140,27 @@ class UserRequestController extends Controller
             
             $tool = Tool::find($value->item_id);
             
-            if($value->quanity > $tool->quanity)
-            {
+                if($value->quanity > $tool->quanity)
+                {
                 $UserRequest->status_id = 1;
                 $UserRequest->save();
                 return redirect()->back()->with('error', 'Khong con du so luon trong kho');
-            }else{
+                }else{
                 DB::transaction(function () use($UserRequest, $id, $request, $value) {
                 $UserRequest->status_id = $request->status_id;
                 $UserRequest->note = $request->note;
                 $UserRequest->save();
-                if($UserRequest->status_id == 2)
-                { 
+                    if($UserRequest->status_id == 2)
+                    { 
                     $this->decreaseQuanities($id);
-                }
+                    }
                 });
                 return redirect()->back()->with('msg', 'Cập nhật thành công');
-            }
+                }
+
+            
+            return redirect()->back()->with('error', 'Khong co san pham');
+            
             
         }
     
@@ -136,17 +175,6 @@ class UserRequestController extends Controller
      */
     public function destroy($id)
     {
-       $tb_request_detail = Requests::find($id)->details;
-       $tb_request_tool = RequestTool::where('user_request_id', $id)->get();
-       foreach($tb_request_detail as $key => $value)
-       {
-        RequestDetail::destroy($tb_request_detail[$key]->id);
-       }
-       foreach($tb_request_tool as $key => $value)
-       {
-        RequestTool::destroy($tb_request_tool[$key]->id);
-       }
-       
        
         Requests::destroy($id);
         
@@ -173,10 +201,13 @@ class UserRequestController extends Controller
         foreach($toolQty as $value)
         {
             $tool = Tool::find($value->item_id);
+            if(isset($tool)){
+                $tool->update(['quanity' => $tool->quanity + $value->quanity]);
+            }
             
-            $tool->update(['quanity' => $tool->quanity + $value->quanity]);
+            return back()->with('error','khong co tools');
             
         }
     }
-    
+   
 }   

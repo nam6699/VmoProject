@@ -10,7 +10,6 @@ class Requests extends Model
 {
     use HasFactory;
     protected $table = "user_requests";
-    public $timestamps = false;
 
     public function details()
     {

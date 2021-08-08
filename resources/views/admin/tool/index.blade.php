@@ -56,9 +56,9 @@
 
         $(function () {
     
-          // xóa sản phẩm khỏi giỏ hàng
+          //
             $(document).on("click", '.remove-to-cart', function () {
-                var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng ?");
+                var result = confirm("Bạn có chắc chắn muốn xóa ?");
                 if (result) {
                     var id = $(this).attr('data-id');
                     $.ajax({
