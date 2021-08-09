@@ -39,7 +39,7 @@ class ToolController extends Controller
 
         $request->validate([
             'name'=>'required',
-            'quanity'=>'required|Numeric',
+            'quanity'=>'required|Integer',
             'image'=>'required|mimes:jpg,png,jpeg|max:5048'
 
         ]);
@@ -95,8 +95,8 @@ class ToolController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'quanity'=>'required|Numeric',
-            'image'=>'required|mimes:jpg,png,jpeg|max:5048'
+            'quanity'=>'required|Integer',
+            'image'=>'mimes:jpg,png,jpeg|max:5048'
 
         ]);
         $tool = new Tool();

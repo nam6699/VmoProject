@@ -4,6 +4,7 @@
   <head>
     <meta name="viewport" content="width=device-width" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <base href="{{ asset('') }}">
     <title>Simple Transactional Email</title>
     <style>
       /* -------------------------------------
@@ -368,7 +369,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a class="button" href="{!! $url !!}" target="_blank">Button</a> </td>
+                                      <td> <a class="button" href="{!!$url!!}" target="_blank">Button</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>

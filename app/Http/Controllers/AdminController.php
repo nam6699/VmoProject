@@ -39,6 +39,12 @@ class AdminController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'password'=>'required',
+            'role'=>'required'
+        ]);
         $user = User::create($request->except('_token', 'role'));
 
         $user->roles()->sync($request->role);
@@ -80,6 +86,11 @@ class AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name'=>'required',
+            'email'=>'required|email',
+            'role'=>'required'
+        ]);
         $user = User::findOrFail($id);
 
         $user->update($request->except('_token', 'role'));
