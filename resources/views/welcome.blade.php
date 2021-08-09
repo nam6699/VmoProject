@@ -43,7 +43,7 @@
        <header id="showcase">
            <h1>Welcome To The VmoTools</h1>
            <p>A place to get anything you want</p>
-            <a href="{{ route('login') }}" class="button">Login</a>
+            <a href="{{ route('login') }}" class="button">Continue To Login</a>
        </header>    
     </body>
 </html>

@@ -8,8 +8,12 @@
     <input type="text" class="form-control" name="name" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter name">
   </div>
   <div class="form-group">
-    <label for="exampleInputEmail1">email</label>
+    <label for="exampleInputEmail1">Email</label>
     <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Password</label>
+    <input type="password" class="form-control" name="password" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter password">
   </div>
   <div class="form-group">
       @foreach ($role as $role )

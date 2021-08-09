@@ -39,7 +39,7 @@
                         @foreach($data as $item)
                         <div class="card card-items" style="width: 15rem;" >
                             <div class="card-image">
-                            <img class="" src="{{asset('images/'.$item->image)}}" alt="Card image cap" width=150 height=175>
+                            <img class="pt-2" src="{{asset('images/'.$item->image)}}" alt="Card image cap" width=150 height=175>
                             </div>
                             <div class="card-body">
                                 <h5 class=" text-bold text-uppercase text-center text-dark">{{$item->name}}</h5>

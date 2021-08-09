@@ -27,15 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //Role::create(['name'=>'super admin']);
-        //Permission::create(['name'=>'edit admins']);
-         //$role = Role::findById(3);
-         //$permission = Permission::all();
-         //$role->givePermissionTo($permission);
-        // Auth::user()->givePermissionTo('edit tools');
-        //Auth::user()->assignRole('super admin');
-         //Auth::user()->removeRole('user');
-         //$role->revokePermissionTo('edit tools');
         if(Auth::user()->hasRole('admin|super admin'))
         {
             return view('admin.dashboard');
