@@ -34,7 +34,6 @@ class SendEmail implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('user.email.email-template', $data, function($message) use ($data) {
-            $message->from($data['name']);
             $message->to($data['email'])
             ->subject($data['subject']);
           });

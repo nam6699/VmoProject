@@ -21,7 +21,6 @@
                 </div>
         <div class="search ">
                 <form action="{{url('search')}}" method='post'>
-                    {{ csrf_field() }}
                 <div class="input-group rounded">
                 <input type="search" class="form-control rounded" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"
                     aria-describedby="search-addon" /> 

@@ -163,7 +163,7 @@ class RequestController extends Controller
                     $request->validate([
                         'email' => 'required|email',
                         'subject' => 'required',
-                        'name' => 'required',
+                        'name' => 'required|email',
                         'content' => 'required',
                     ]);
             
@@ -257,7 +257,7 @@ class RequestController extends Controller
              $user = User::role('admin')->get(); 
              $enrollmentData = [
                 'mailer'=>'iam '.$mailer->email,
-                'body'=>'Please accpept my request',
+                'body'=>'Please review my request',
                 'enrollmentText'=>'Press Here',
                 'url'=>route('request.edit',$id),
                 'thank you'=>'thank you'

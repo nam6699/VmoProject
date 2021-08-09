@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tool;
+use App\Models\Requests;
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +32,18 @@ class HomeController extends Controller
     {
         if(Auth::user()->hasRole('admin|super admin'))
         {
-            return view('admin.dashboard');
+            $numRequest = DB::table('user_requests')
+                            ->where('status_id','=','1')
+                            ->count();
+            $numUser = User::count();
+            $numPTools = Tool::count();
+
+        return view('admin.dashboard', [
+            'numRequest' => $numRequest,
+            'numUser' => $numUser,
+            'numPTools' => $numPTools,
+        ]);
+           
         }elseif(Auth::user()->hasRole('user'))
         {
             $data = Tool::paginate(9);

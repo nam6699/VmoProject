@@ -30,8 +30,8 @@
                         <div class="row">
                         <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="inputName">Name</label>
-                                    <input type="text" name="name" class="form-control" placeholder="Enter Name">
+                                    <label for="inputName">Your Email</label>
+                                    <input type="email" name="name" class="form-control" placeholder="Enter Your Email..">
                                     @error('name')
                                     <span class="text-danger"> {{ $message }} </span>
                                     @enderror
@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="inputEmail">Email</label>
+                                    <label for="inputEmail">Send To</label>
                                     <input type="email" name="email" class="form-control" placeholder="Enter Email" value="namnpp@vmodev.com">
                                     @error('email')
                                     <span class="text-danger"> {{ $message }} </span>
@@ -64,7 +64,7 @@
                         </div>         
                     </div>
                         <button type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Send Request</button> 
-                        <a class="btn btn-danger rounded-pill py-2 btn-block" href="{{ route('destroy.request') }}" class="continueshoping">Cancel</a>
+                        <a class="btn btn-danger rounded-pill py-2 btn-block" href="{{ route('destroy.request') }}">Cancel</a>
                 </div>
             </div>
         </div>
