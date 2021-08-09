@@ -58,7 +58,7 @@
     
           //
             $(document).on("click", '.remove-to-cart', function () {
-                var result = confirm("Bạn có chắc chắn muốn xóa ?");
+                var result = confirm("Are you sure you want to delete?");
                 if (result) {
                     var id = $(this).attr('data-id');
                     $.ajax({

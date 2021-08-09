@@ -71,7 +71,7 @@
                   } else {
                     urlParams.set('status', status);
                   }
-                  window.location.href = pathname + "?"+decodeURIComponent(urlParams.toString());
+                  window.location.href = pathname + "?" +decodeURIComponent(urlParams.toString());
                 }
             });
 </script>

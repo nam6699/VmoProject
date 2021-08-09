@@ -126,13 +126,15 @@ class UserRequestController extends Controller
         if($id_status == 4){
             $UserRequest->status_id = 4;
             $UserRequest->save();
-            return redirect()->back()->with('error', 'Cancled Request');
+            return redirect()->back()->with('error', 'The Request Has Been Cancled');
         }else if($id_status == 3)
         {
+            DB::transaction(function () use($UserRequest, $id) {
             $UserRequest->status_id = 3;
             $UserRequest->save();
             $this->returnQty($id);
             return redirect()->back()->with('msg', 'Return Request Succeed');
+            });
         }
         
         foreach($toolQty as $value)
@@ -144,7 +146,7 @@ class UserRequestController extends Controller
                 {
                     $UserRequest->status_id = 1;
                     $UserRequest->save();
-                    return redirect()->back()->with('error', 'Khong con du so luon trong kho');
+                    return redirect()->back()->with('error', 'Not Enough Quanity');
                 }else{
                 DB::transaction(function () use($UserRequest, $id, $request, $value) {
                     $UserRequest->status_id = $request->status_id;
@@ -155,11 +157,11 @@ class UserRequestController extends Controller
                         $this->decreaseQuanities($id);
                         }
                 });
-                return redirect()->back()->with('msg', 'Cập nhật thành công');
+                return redirect()->back()->with('msg', 'Update Succeed');
                 }
             }
             
-            return redirect()->back()->with('error', 'Khong co san pham');
+            return redirect()->back()->with('error', 'The Tool Has Been Deleted');
               
         }
     

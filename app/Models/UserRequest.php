@@ -27,13 +27,14 @@ class UserRequest extends Model
         if($this->items) {
             if(array_key_exists($id, $this->items)){
                 $storeItem = $this->items[$id];
+                
             }
         }
         $storeItem['qty']++;
         $this->items[$id] = $storeItem;
         $this->totalQty++;
     }
-    public function store($id, $qty) 
+    public function updateRequest($id, $qty) 
     {
         //dd($this->items[$id]['qty']);
     

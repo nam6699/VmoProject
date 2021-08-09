@@ -51,12 +51,12 @@ class RequestController extends Controller
     }
     public function updateRequest(Request $request)
     {
-         // check nhập số lượng không đúng định dạng
+         // validate 
          $validator = Validator::make($request->all(), [
             'qty' => 'required|numeric|min:1',
         ]);
 
-        // check số lượng lỗi
+        // if false
         if ($validator->fails()) {
             return response()->json([
                 'status'  => false ,
@@ -67,35 +67,35 @@ class RequestController extends Controller
         $qty = $request->qty;
         
 
-        // Lấy giỏ hàng hiện tại thông qua session
+        // get current request session form
         $UserRequest = session('UserRequest');
         $NewUserRequest = new UserRequest($UserRequest);
-        $NewUserRequest->store($item_id, $qty);
+        $NewUserRequest->updateRequest($item_id, $qty);
         //dd($NewUserRequest);
 
-        if (count($NewUserRequest->items) > 0) { // check  có sản phẩm trong giỏ hàng không
-            // Lưu thông tin vào session
+        if (count($NewUserRequest->items) > 0) { // check if the item is in the form
+            // save in session
             $request->session()->put('UserRequest', $NewUserRequest);
         } else {
-            $request->session()->forget('UserRequest'); // clear session cart
+            $request->session()->forget('UserRequest'); // clear session 
         }
 
         return response()->json([
-            'status'  => true, // thành công
+            'status'  => true, // success
             'data' => view('user.components.requests')->render()
         ]);
 
     }
     public function removeRquest(Request $request, $id)
     {
-        // Kiểm tra tồn tại giỏ hàng cũ
+        // check old request form
         $UserRequest = session('UserRequest') ? session('UserRequest') : '';
-        // Khởi tạo giỏ hàng
+        // start new request form
         $NewUserRequest = new UserRequest($UserRequest);
         $NewUserRequest->remove($id);
 
         if (count($NewUserRequest->items) > 0) {
-            // Lưu thông tin vào session
+            // save in session
             $request->session()->put('UserRequest', $NewUserRequest);
         } else {
             $request->session()->forget('UserRequest');
@@ -171,7 +171,8 @@ class RequestController extends Controller
                         'subject' => $request->subject,
                         'name' => $request->name,
                         'email' => $request->email,
-                        'content' => $request->content
+                        'content' => $request->content,
+                        'url'=>route('request.edit',$saveRequest->id)
                     ];
                     SendEmail::dispatch($data);
                     $request->session()->forget('UserRequest');
@@ -247,15 +248,18 @@ class RequestController extends Controller
     public function updateStatusRequest(Request $request, $id)
     {
         $id_status = $request->status_id;
+        $mailer = Requests::findorFail($id)->user;
+        //dd($mailer->email);
         $UserRequest = Requests::findorFail($id);
-        DB::transaction(function () use($UserRequest,$id_status, $id) {
+        DB::transaction(function () use($UserRequest,$id_status, $id, $mailer) {
         $UserRequest->status_id = $id_status;
          if($UserRequest->save()){
              $user = User::role('admin')->get(); 
              $enrollmentData = [
-                'body'=>'You recived the notification',
-                'enrollmentText'=>'you are allowed to enroll',
-                'url'=>url('admin/request'),
+                'mailer'=>'iam '.$mailer->email,
+                'body'=>'Please accpept my request',
+                'enrollmentText'=>'Press Here',
+                'url'=>route('request.edit',$id),
                 'thank you'=>'thank you'
              ];
              foreach($user as $value){

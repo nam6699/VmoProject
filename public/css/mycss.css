@@ -103,6 +103,9 @@ p {
     font-size: 0.875rem;
     padding: .875rem 0.9375rem
 }
+.table-request {
+    border-bottom: 0.1px dashed;
+}
 
 .badge {
     border-radius: 0;

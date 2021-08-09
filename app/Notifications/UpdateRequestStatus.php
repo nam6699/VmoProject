@@ -42,6 +42,7 @@ class UpdateRequestStatus extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
+                    ->line($this->enrollmentData['mailer'])
                     ->line($this->enrollmentData['body'])
                     ->action($this->enrollmentData['enrollmentText'], $this->enrollmentData['url'])
                     ->line($this->enrollmentData['thank you']);

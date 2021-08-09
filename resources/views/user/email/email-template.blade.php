@@ -385,7 +385,7 @@
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                   <tbody>
                                     <tr>
-                                      <td> <a class="button" href="http://127.0.0.1:8000/admin/request" target="_blank">Button</a> </td>
+                                      <td> <a class="button" href="{!! $url !!}" target="_blank">Button</a> </td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -394,6 +394,7 @@
                           </tbody>
                         </table>
                         <p>Thank You!</p>
+                        <p>Regards,</p>
                         <p>{!! $name !!}</p>
                       </td>
                     </tr>

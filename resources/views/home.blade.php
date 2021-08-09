@@ -19,14 +19,15 @@
                         </div>
                     @endif
                 </div>
-        <div class="search">
-                <form action="{{url('search')}}" method='get' >
+        <div class="search ">
+                <form action="{{url('search')}}" method='post'>
+                    {{ csrf_field() }}
                 <div class="input-group rounded">
-                <input type="search" class="form-control rounded" name="searchInput" placeholder="Search" aria-label="Search"
-                    aria-describedby="search-addon" />
+                <input type="search" class="form-control rounded" name="searchInput" id="searchInput" placeholder="Search" aria-label="Search"
+                    aria-describedby="search-addon" /> 
                 <button class="input-group-text border-0" type="submit" id="search-addon">
                     <i class="fas fa-search"></i>
-                </span>
+                </span>   
                 </div>
                  </form>
             </div>
@@ -62,6 +63,6 @@
 @endsection
 @section('my_javascript')
     <script>
-   
+       
     </script>
 @endsection

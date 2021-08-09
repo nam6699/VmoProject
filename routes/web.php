@@ -39,7 +39,7 @@ Route::get('login/google/callback', [App\Http\Controllers\Auth\LoginController::
 
 //send request
 Route::group(['middleware'=>'role:user'], function(){
-    Route::get('search',[HomeController::class,'search'])->name('search');
+    Route::post('search',[HomeController::class,'search'])->name('search');
     Route::get('request',[RequestController::class,'getRequest'])->name('request');
     Route::get('request/add-request/{id}',[RequestController::class,'addRequest'])->name('add.request');
     Route::get('request/update-request',[RequestController::class,'updateRequest']);
