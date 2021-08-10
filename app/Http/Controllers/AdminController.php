@@ -13,11 +13,25 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $data = User::paginate(10);
+        if($request->query('role') == 'user'){
+        $data = User::role('user')->paginate(1);
 
-        return view('admin.user.index',['user'=>$data]);
+        return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
+        }else if($request->query('role') == 'admin'){
+        $data = User::role('admin')->paginate(10);
+
+        return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
+        }else if($request->query('role') == 'superadmin'){
+            $data = User::role('super admin')->paginate(10);
+    
+            return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
+        }else{
+            $data = User::paginate(10);
+
+            return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
+        }
     }
 
 
@@ -116,9 +130,25 @@ class AdminController extends Controller
     {
         $search = $request->get('search');
         if($search){
-        $user = User::where('name','LIKE','%'. $search .'%', 'OR' ,'email', 'LIKE', '%'. $search .'%')->paginate(10);
+            if($request->query('role') == 'user'){
+                $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('user')->paginate(12);
 
-        return view('admin.user.search',['data'=>$user]);
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+            }else if($request->query('role') == 'admin'){
+                $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('admin')->paginate(12);
+
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+            }
+            else if($request->query('superadmin') == 'admin'){
+                $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('super admin')->paginate(12);
+
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+            }else{
+                $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->paginate(12);
+
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+            }
+            
         }else{
             return redirect()->route('user.index');
         }

@@ -67,7 +67,7 @@ class LoginController extends Controller
         // }
         if(isset($user))
         {
-            Auth::login($user);
+            Auth::login($user, $remember = true);
         }
         
     }

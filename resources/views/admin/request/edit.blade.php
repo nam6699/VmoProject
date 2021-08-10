@@ -57,7 +57,7 @@
                                 Cancel
                             </button>
                             @elseif($data->status_id == 5)
-                            <button id="button-disable" name="status_id" value="3" type="submit" class="btn btn-info btn-flat">
+                            <button id="button-disable" name="status_id" value="3" type="submit" class="btn btn-success btn-flat">
                                 <i class="fa fa-edit"></i>
                                 Done
                             </button>

@@ -21,6 +21,7 @@
                             <table class="table">
                                 <thead>
                                     <tr>
+                                        <th>Id</th>
                                         <th>Name</th>
                                         <th>quanity</th>
                                  
@@ -28,21 +29,23 @@
                                 </thead>
                                 <tbody>
                                     @foreach($data->details as $key => $value)
-                                    <tr>
+                                    <tr><td>{{$key}}</td>
                                         <td>{{$value->name}}</td>
                                         <td>{{$value->quanity}}</td>
                                     </tr>
                                     @endforeach
+                                    <div class="return">
                                     @foreach($status as $item)
                                             @if($data->status_id == $item->id)
                                             <label id="select-disable" class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label>
                                             @endif
                                     @endforeach
                                     @if($data->status_id == 2)
-                                    <button id="button-disable" type="submit" name="status_id" value="5" class="btn btn-info btn-flat">
+                                    <button id="button-disable" onclick="return confirm('Are you sure?')" type="submit" name="status_id" value="5" class="btn btn-danger">
                                         <i class="fa fa-edit"></i>
                                         Returning
                                     </button>
+                                    </div>
                                     @endif
                                 </tbody>
                             </table>

@@ -37,7 +37,7 @@
                                         <td>{{$value->user->name}}</td>
                                         <td>{{$key}}</td>
                                         <td>{{$value->note}}</td> 
-                                        <td><a class="btn btn-primary" href="{{route('detail.request', ['id'=>$value->id])}}">detail</a></td>
+                                        <td><a class="btn btn-primary" href="{{route('detail.request', ['id'=>$value->id])}}">Detail</a></td>
                                         @foreach($status as $item)
                                             @if($value->status_id == $item->id)
                                             <td><label class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label></td>
@@ -49,6 +49,8 @@
                             </table>
                             @if($filter == 0)
                             {{$data->links()}}
+                            @else
+                            {{ $data->appends(['status'=>$filter])->links()  }}
                             @endif
                         </div>
                     </div>

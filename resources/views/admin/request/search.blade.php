@@ -10,6 +10,7 @@
                 </div>
     </div>
     </form>
+    <h5>keyword : {{$search}}</h5>
 <div class="request_status" style="width:100px;">
   <select name="" id="statusId" class="form-control">
       <option {{( $filter == ''  ? 'selected' : '') }} value="0">all</option>
@@ -58,9 +59,9 @@
         </tbody>
       </table>
       @if($filter == 0)
-      {{ $data->links() }}
+      {{ $data->appends(['search'=>$search])->links() }}
       @else
-      {{ $data->appends(['status'=>$filter])->links() }}
+      {{ $data->appends(['search'=>$search,'status'=>$filter])->links() }}
       @endif
           <!-- /.content -->
         <!-- /.content-wrapper -->

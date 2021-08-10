@@ -1,0 +1,10 @@
+.searh-form{
+    width: 100%;
+    
+}
+.search-input-group{
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    display: flex;
+}

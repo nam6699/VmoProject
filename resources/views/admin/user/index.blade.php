@@ -3,16 +3,27 @@
 
     <!-- /.content-header -->
     <form action="{{url('admin/user/search')}}" method='get'>
-                <div class="input-group rounded">
+    <div class="search-form">
+                <div class="search-input-group rounded">
                 <input type="search" class="form-control rounded" name="search" placeholder="Search" aria-label="Search"
                     aria-describedby="search-addon" />
                 <button class="input-group-text border-0" type="submit" id="search-addon">
                     <i class="fas fa-search"></i>
                 </span>
                 </div>
+    </div>
     </form>
+    <div class="request_status" style="width:100px;">
+  <select name="" id="role" class="form-control">
+      <option {{( $role == ''  ? 'selected' : '') }} value="0">all</option>
+      <option {{( $role == 'user' ? 'selected' : '') }} value="user">user</option>
+      <option {{( $role == 'admin' ? 'selected' : '') }} value="admin">admin</option>
+      <option {{( $role == 'superadmin' ? 'selected' : '') }} value="superadmin">super admin</option>
+  </select>
+
+</div>
     <!-- Main content -->
-    <a href="{{route('user.create')}}" class="nav-link">Create</a>
+    <a href="{{route('user.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
           <table class="table">
         <thead>
           <tr>
@@ -29,13 +40,17 @@
             <td>{{$value->email}}</td>
             <td>
               <a href="{{route('user.edit', ['user'=>$value->id])}}" class="btn btn-primary">Edit</a>
-            <a data-id="{{$value->id }}" href="javascript:void(0)" class="remove-to-cart btn btn-danger" class="text-dark">Delete</a>
+              <a data-id="{{$value->id }}" href="javascript:void(0)" class="remove-to-cart btn btn-danger" class="text-dark">Delete</a>
             </td>
           </tr>
           @endforeach
         </tbody>
       </table>
+      @if($role == 0)
       {{ $user->links() }}
+      @else
+      {{ $user->appends(['role'=>$role])->links() }}
+      @endif
           <!-- /.content -->
         <!-- /.content-wrapper -->
 
@@ -72,6 +87,19 @@
                             console.log(e.message);
                         }
                     });
+                }
+            });
+            var pathname = window.location.pathname; // 
+          var urlParams = new URLSearchParams(window.location.search); // khoi tao
+          $(document).on("change", '#role', function () {
+                var status = $(this).val();
+                if (status) {
+                  if (status == '0') {
+                    urlParams.delete('role');
+                  } else {
+                    urlParams.set('role', status);
+                  }
+                  window.location.href = pathname + "?"+decodeURIComponent(urlParams.toString());
                 }
             });
           })

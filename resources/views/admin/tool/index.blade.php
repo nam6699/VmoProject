@@ -6,16 +6,17 @@
 
     <!-- Main content -->
     <form action="{{url('admin/tool/search')}}" method='get'>
-                <div class="input-group rounded">
+    <div class=searh-form>
+                <div class="search-input-group rounded">
                 <input type="search" class="form-control rounded" name="search" placeholder="Search" aria-label="Search"
                     aria-describedby="search-addon" />
                 <button class="input-group-text border-0" type="submit" id="search-addon">
                     <i class="fas fa-search"></i>
-                </span>
                 </div>
+    </div>
     </form>
     @can('edit tools')
-    <a href="{{route('tool.create')}}" class="nav-link">Create</a>
+    <a href="{{route('tool.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
     @endcan
           <table class="table">
         <thead>

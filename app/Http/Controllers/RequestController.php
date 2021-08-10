@@ -186,35 +186,35 @@ class RequestController extends Controller
         $status = RequestStatus::all();
         if(!empty($request->query('status'))) {
             if($request->query('status') == 1) {
-                $data = Requests::where(['user_id' => $id,'status_id'=>1])->get();
+                $data = Requests::where(['user_id' => $id,'status_id'=>1])->paginate(10);
                 return view('user.show',[
                     'data'=>$data,
                     'status'=>$status,
                     'filter'=>$request->query('status')
                 ]);
             }else if($request->query('status') == 2) {
-                $data = Requests::where(['user_id' => $id,'status_id'=>2])->get();
+                $data = Requests::where(['user_id' => $id,'status_id'=>2])->paginate(10);
                 return view('user.show',[
                     'data'=>$data,
                     'status'=>$status,
                     'filter'=>$request->query('status')
                 ]);
             }else if($request->query('status') == 3) {
-                $data = Requests::where(['user_id' => $id,'status_id'=>3])->get();
+                $data = Requests::where(['user_id' => $id,'status_id'=>3])->paginate(10);
                 return view('user.show',[
                     'data'=>$data,
                     'status'=>$status,
                     'filter'=>$request->query('status')
                 ]);
             }else if($request->query('status') == 4) {
-                $data = Requests::where(['user_id' => $id,'status_id'=>4])->get();
+                $data = Requests::where(['user_id' => $id,'status_id'=>4])->paginate(10);
                 return view('user.show',[
                     'data'=>$data,
                     'status'=>$status,
                     'filter'=>$request->query('status')
                 ]);
             }else if($request->query('status') == 5) {
-                $data = Requests::where(['user_id' => $id,'status_id'=>5])->get();
+                $data = Requests::where(['user_id' => $id,'status_id'=>5])->paginate(10);
                 return view('user.show',[
                     'data'=>$data,
                     'status'=>$status,
@@ -223,8 +223,7 @@ class RequestController extends Controller
             }
 
         }else{
-            
-            $data = Requests::where(['user_id' => $id])->paginate(5);
+            $data = Requests::where(['user_id' => $id])->paginate(10);
             return view('user.show',[
                 'data'=>$data,
                 'status'=>$status,

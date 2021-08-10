@@ -134,9 +134,9 @@ class ToolController extends Controller
     {
         $searchTool = $request->get('search');
         if($searchTool){
-        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(10);
+        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(12);
 
-        return view('admin.tool.search',['data'=>$tool]);
+        return view('admin.tool.search',['data'=>$tool,'keyword'=>$searchTool]);
         }else{
 
             return redirect()->route('tool.index');

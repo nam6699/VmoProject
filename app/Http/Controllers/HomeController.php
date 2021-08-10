@@ -46,7 +46,7 @@ class HomeController extends Controller
            
         }elseif(Auth::user()->hasRole('user'))
         {
-            $data = Tool::paginate(9);
+            $data = Tool::paginate(16);
         
             return view('home',['data'=>$data]);
         }else{
@@ -60,8 +60,13 @@ class HomeController extends Controller
         
         $searchTool = $request->get('searchInput');
         if($searchTool){
-        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(9);
-        return view('user.search.toolSearch',['data'=>$tool]);
+        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(4);
+        $totalResult = $tool->total();
+        return view('user.search.toolSearch',[
+            'data'=>$tool,
+            'keyword'=>$searchTool,
+            'totalResult'=>$totalResult
+            ]);
         }else{
             return redirect()->route('home');
         }

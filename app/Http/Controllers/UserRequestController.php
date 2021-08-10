@@ -21,39 +21,39 @@ class UserRequestController extends Controller
         if(!empty($request->query('status'))) {
            
             if($request->query('status') == 1){
-                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                $data = Requests::where(['status_id'=>$request->query('status')])->paginate(12);
                
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>$request->query('status')
             ]);
             }else if($request->query('status') == 2){
-                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                $data = Requests::where(['status_id'=>$request->query('status')])->paginate(12);
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>$request->query('status')
             ]);
             }else if($request->query('status') == 3){
-                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                $data = Requests::where(['status_id'=>$request->query('status')])->paginate(12);
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>$request->query('status')
             ]);
             }else if($request->query('status') == 4){
-                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                $data = Requests::where(['status_id'=>$request->query('status')])->paginate(12);
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>$request->query('status')
             ]);
             }else if($request->query('status') == 5){
-                $data = Requests::where(['status_id'=>$request->query('status')])->get();
+                $data = Requests::where(['status_id'=>$request->query('status')])->paginate(12);
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>$request->query('status')
             ]);
             }
         }else{
-            $data = Requests::paginate(10);
+            $data = Requests::paginate(12);
                 return view('admin.request.index',[
                 'data'=>$data,
                 'filter'=>0
@@ -206,6 +206,54 @@ class UserRequestController extends Controller
                 $tool->update(['quanity' => $tool->quanity + $value->quanity]);
             }
             
+        }
+    }
+    public function search(Request $request) 
+    {
+        $search = $request->get('search');
+        if($search){
+            $filter = $request->query('status');
+            if($filter == 1){
+                $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                                    ->where('status_id','=',1)
+                                    ->paginate(12);
+
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }else if($filter == 2){
+                    $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                                        ->where('status_id','=',2)
+                                        ->paginate(12);
+    
+                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }else if($filter == 3){
+                $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                                    ->where('status_id','=',3)
+                                    ->paginate(12);
+
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }
+            else if($filter == 4){
+                $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                                    ->where('status_id','=',4)
+                                    ->paginate(12);
+
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }else if($filter == 5){
+                $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                                    ->where('status_id','=',5)
+                                    ->paginate(12);
+
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }else{
+                $user = Requests::where('user_email','LIKE','%'. $search .'%')
+                ->paginate(12);
+
+                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            }
+            
+            
+        }else{
+            return redirect()->route('request.index');
         }
     }
    
