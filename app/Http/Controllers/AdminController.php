@@ -20,7 +20,7 @@ class AdminController extends Controller
 
         return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
         }else if($request->query('role') == 'admin'){
-        $data = User::role('admin')->paginate(10);
+        $data = User::role('admin')->paginate(2);
 
         return view('admin.user.index',['user'=>$data,'role'=>$request->query('role')]);
         }else if($request->query('role') == 'superadmin'){
@@ -132,21 +132,21 @@ class AdminController extends Controller
         if($search){
             if($request->query('role') == 'user'){
                 $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('user')->paginate(12);
-
-                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+                $totalResult = $user->total();
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search,'totalResult'=>$totalResult]);
             }else if($request->query('role') == 'admin'){
                 $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('admin')->paginate(12);
-
-                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+                $totalResult = $user->total();
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search,'totalResult'=>$totalResult]);
             }
             else if($request->query('superadmin') == 'admin'){
                 $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->role('super admin')->paginate(12);
-
-                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+                $totalResult = $user->total();
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search,'totalResult'=>$totalResult]);
             }else{
                 $user = User::where('name','LIKE','%'. $search .'%')->orWhere('email', 'LIKE', '%'. $search .'%')->paginate(12);
-
-                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search]);
+                $totalResult = $user->total();
+                return view('admin.user.search',['data'=>$user,'role'=>$request->query('role'),'search'=>$search,'totalResult'=>$totalResult]);
             }
             
         }else{

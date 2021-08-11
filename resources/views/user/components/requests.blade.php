@@ -12,6 +12,11 @@
                         {{ session('msg') }}
                     </div>
             @endif
+            @if (session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('error') }}
+                    </div>
+            @endif
               <thead>
                 <tr>
                   <th scope="col" class="border-0 bg-light">
@@ -104,8 +109,8 @@
                         id : item_id,
                         qty : qty
                         
-                    }, // dữ liệu truyền sang nếu có
-                    dataType: "json", // kiểu dữ liệu trả về
+                    }, 
+                    dataType: "json", 
                     success: function (response) {
                         console.log(response);
                         // success
@@ -113,7 +118,7 @@
                             $('#my-request').html(response.data);
                         }
                     },
-                    error: function (e) { // lỗi nếu có
+                    error: function (e) { //error
                         console.log(e.message);
                     }
                 });

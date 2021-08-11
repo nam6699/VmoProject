@@ -24,6 +24,7 @@ class UserRequest extends Model
             'item' => $item,
             'qty' => 0
         ];
+        //check if tool exist in request form
         if($this->items) {
             if(array_key_exists($id, $this->items)){
                 $storeItem = $this->items[$id];
@@ -37,18 +38,18 @@ class UserRequest extends Model
     public function updateRequest($id, $qty) 
     {
         //dd($this->items[$id]['qty']);
-    
+        //delete current quanity of tool in request
         $this->totalQty = $this->totalQty - $this->items[$id]['qty'];
-        
+        //update quanity of tool in request
         $this->items[$id]['qty'] = $qty;
-
+        //update total quanity 
         $this->totalQty = $this->totalQty + $this->items[$id]['qty'];
     }
     public function remove($id)
     {
-        // trừ bớt số lượng
+        // decrease quanity
         $this->totalQty = $this->totalQty - $this->items[$id]['qty'];
-
+        //remove in session
         unset($this->items[$id]);
 
     }

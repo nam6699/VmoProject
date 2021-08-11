@@ -30,6 +30,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //redirect users to different pages 
         if(Auth::user()->hasRole('admin|super admin'))
         {
             $numRequest = DB::table('user_requests')
@@ -46,7 +47,7 @@ class HomeController extends Controller
            
         }elseif(Auth::user()->hasRole('user'))
         {
-            $data = Tool::paginate(16);
+            $data = Tool::paginate(12);
         
             return view('home',['data'=>$data]);
         }else{
@@ -60,7 +61,7 @@ class HomeController extends Controller
         
         $searchTool = $request->get('searchInput');
         if($searchTool){
-        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(4);
+        $tool = Tool::where('name','LIKE','%'. $searchTool . '%')->paginate(12);
         $totalResult = $tool->total();
         return view('user.search.toolSearch',[
             'data'=>$tool,

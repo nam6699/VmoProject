@@ -13,17 +13,20 @@
                 </div>
     </div>
     </form>
-    <div class="request_status" style="width:100px;">
-  <select name="" id="role" class="form-control">
-      <option {{( $role == ''  ? 'selected' : '') }} value="0">all</option>
-      <option {{( $role == 'user' ? 'selected' : '') }} value="user">user</option>
-      <option {{( $role == 'admin' ? 'selected' : '') }} value="admin">admin</option>
-      <option {{( $role == 'superadmin' ? 'selected' : '') }} value="superadmin">super admin</option>
-  </select>
+  <div class="d-flex flex-start">
+      <a href="{{route('user.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
+      <div class="request_status" style="width:150px;">
+      <select name="" id="role" class="form-control">
+        <option {{( $role == ''  ? 'selected' : '') }} value="0">all</option>
+        <option {{( $role == 'user' ? 'selected' : '') }} value="user">user</option>
+        <option {{( $role == 'admin' ? 'selected' : '') }} value="admin">admin</option>
+        <option {{( $role == 'superadmin' ? 'selected' : '') }} value="superadmin">super admin</option>
+      </select>
+      </div>
+  </div>
 
-</div>
     <!-- Main content -->
-    <a href="{{route('user.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
+    
           <table class="table">
         <thead>
           <tr>
@@ -63,7 +66,7 @@
 
         $(function () {
     
-          // xóa sản phẩm khỏi giỏ hàng
+          // delete
             $(document).on("click", '.remove-to-cart', function () {
                 var result = confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng ?");
                 if (result) {
@@ -79,18 +82,18 @@
                         success: function (response) {
                         console.log(response);
                           if (response.status != 'undefined' && response.status == true) {
-                          // xóa dòng vừa được click delete
-                          $('.user-'+id).closest('tr').remove(); // class .item- ở trong class của thẻ td đã khai báo trong file index
+                          // delete row
+                          $('.user-'+id).closest('tr').remove(); 
                           }
                         },
-                        error: function (e) { // lỗi nếu có
+                        error: function (e) { // error
                             console.log(e.message);
                         }
                     });
                 }
             });
             var pathname = window.location.pathname; // 
-          var urlParams = new URLSearchParams(window.location.search); // khoi tao
+            var urlParams = new URLSearchParams(window.location.search); // khoi tao
           $(document).on("change", '#role', function () {
                 var status = $(this).val();
                 if (status) {
@@ -99,7 +102,7 @@
                   } else {
                     urlParams.set('role', status);
                   }
-                  window.location.href = pathname + "?"+decodeURIComponent(urlParams.toString());
+                  window.location.href = pathname +"?"+decodeURIComponent(urlParams.toString());
                 }
             });
           })

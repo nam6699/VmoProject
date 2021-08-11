@@ -23,6 +23,7 @@ class RequestController extends Controller
     {
         
         $tool = Tool::find($id);
+        //check if request session already exist 
         $oldRequest = Session::has('UserRequest') ? Session::get('UserRequest') : null;
         
         if(!empty(session()->get('UserRequest')->items[$id]['qty'])){
@@ -119,18 +120,18 @@ class RequestController extends Controller
         {
             return redirect('home');
         }
-       
         $UserRequest =  session('UserRequest');
-        
+        // check if tool is empty or quanity in stock smaller than in user request
         foreach($UserRequest->items as $item)
         {
             $qty = Tool::find($item['item']->id);
                 if(empty($qty) || $item['qty'] > $qty->quanity)
                 {
-                    return redirect()->route('request')->with(['msg' => 'not enough quanity']);
+                    return redirect()->route('request')->with(['error' => 'not enough quanity']);
 
                 }
         }
+                    //save user request to db
                     DB::transaction(function () use($UserRequest, $request) {
                     $saveRequest = new Requests();
                     $saveRequest->user_email = Auth::user()->email;
@@ -163,7 +164,7 @@ class RequestController extends Controller
                     $request->validate([
                         'email' => 'required|email',
                         'subject' => 'required',
-                        'name' => 'required|email',
+                        'name' => 'required',
                         'content' => 'required',
                     ]);
             
@@ -184,6 +185,7 @@ class RequestController extends Controller
     {
         //dd($request->query('status'));
         $status = RequestStatus::all();
+        //filter status
         if(!empty($request->query('status'))) {
             if($request->query('status') == 1) {
                 $data = Requests::where(['user_id' => $id,'status_id'=>1])->paginate(10);

@@ -33,7 +33,7 @@
             <div id="features" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
               <h2>Tools List</h2>
               <h4>
-                <span class="cat-name">Search keyword: "{{ $keyword }}" ({{ $totalResult }})</span>
+                <span class="">Search keyword: "{{ $keyword }}" ({{ $totalResult }})</span>
               </h4>
               <div class="row">
               @foreach($data as $item)

@@ -72,7 +72,17 @@
                                     <td><label>Status</label></td>
                                     @foreach($status as $item)
                                             @if($data->status_id == $item->id)
-                                            <td><label class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label></td>
+                                            @if($item->id == 2)
+                                                <td><label class="badge badge-primary"><h6>{{ $item->name }}</h6></label></td>
+                                                @elseif($item->id == 3)
+                                                <td><label class="badge badge-success"> <h6>{{ $item->name }}</h6></label></td>
+                                                @elseif($item->id == 4)
+                                                <td><label class="badge badge-danger"> <h6>{{ $item->name }}</h6></label></td>
+                                                @elseif($item->id == 5)
+                                                <td><label class="badge badge-warning"> <h6>{{ $item->name }}</h6></label></td>
+                                                @else
+                                                <td><label class="badge badge-info"> <h6>{{ $item->name }}</h6></label></td>
+                                                @endif
                                             @endif
                                     @endforeach
                                 </tr>
@@ -107,10 +117,10 @@
                         <table class="table table-hover">
                             <tbody>
                             <tr>
-                                <th>TT</th>
-                                <th style="max-with:200px">Tool nam</th>
-                                <th>Hình ảnh</th>
-                                <th>Số lượng</th>
+                                <th>ID no.</th>
+                                <th style="max-with:200px">Tool name</th>
+                                <th>Image</th>
+                                <th>Quanity</th>
                                 <th class="text-center"></th>
                             </tr>
                             </tbody>

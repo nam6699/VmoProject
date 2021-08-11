@@ -57,7 +57,7 @@
 
         $(function () {
     
-          //
+          //delete
             $(document).on("click", '.remove-to-cart', function () {
                 var result = confirm("Are you sure you want to delete?");
                 if (result) {
@@ -74,11 +74,11 @@
                         console.log(response);
                         // success
                           if (response.status != 'undefined' && response.status == true) {
-                          // xóa dòng vừa được click delete
-                          $('.tool-'+id).closest('tr').remove(); // class .item- ở trong class của thẻ td đã khai báo trong file index
+                          // delete row
+                          $('.tool-'+id).closest('tr').remove(); 
                           }
                         },
-                        error: function (e) { // lỗi nếu có
+                        error: function (e) { // error
                             console.log(e.message);
                         }
                     });

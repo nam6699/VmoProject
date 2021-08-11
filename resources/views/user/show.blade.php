@@ -37,10 +37,20 @@
                                         <td>{{$value->user->name}}</td>
                                         <td>{{$key}}</td>
                                         <td>{{$value->note}}</td> 
-                                        <td><a class="btn btn-primary" href="{{route('detail.request', ['id'=>$value->id])}}">Detail</a></td>
+                                        <td><a class="btn btn-outline-secondary" href="{{route('detail.request', ['id'=>$value->id])}}">Detail</a></td>
                                         @foreach($status as $item)
                                             @if($value->status_id == $item->id)
-                                            <td><label class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label></td>
+                                                @if($item->id == 2)
+                                                <td><label class="badge badge-primary"> {{ $item->name }}</label></td>
+                                                @elseif($item->id == 3)
+                                                <td><label class="badge badge-success"> {{ $item->name }}</label></td>
+                                                @elseif($item->id == 4)
+                                                <td><label class="badge badge-danger"> {{ $item->name }}</label></td>
+                                                @elseif($item->id == 5)
+                                                <td><label class="badge badge-warning"> {{ $item->name }}</label></td>
+                                                @else
+                                                <td><label class="badge badge-info"> {{ $item->name }}</label></td>
+                                                @endif
                                             @endif
                                         @endforeach
                                     </tr>

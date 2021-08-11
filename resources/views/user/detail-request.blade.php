@@ -37,11 +37,21 @@
                                     <div class="return">
                                     @foreach($status as $item)
                                             @if($data->status_id == $item->id)
-                                            <label id="select-disable" class="{{($item->id == 2 ? 'badge badge-success' : 'badge badge-danger')}}"> {{ $item->name }}</label>
+                                            @if($item->id == 2)
+                                                <label class="badge badge-primary"> {{ $item->name }}</label>
+                                                @elseif($item->id == 3)
+                                                <label class="badge badge-success"> {{ $item->name }}</label>
+                                                @elseif($item->id == 4)
+                                                <label class="badge badge-danger"> {{ $item->name }}</label>
+                                                @elseif($item->id == 5)
+                                                <label class="badge badge-warning"> {{ $item->name }}</label>
+                                                @else
+                                                <label class="badge badge-info"> {{ $item->name }}</label>
+                                                @endif
                                             @endif
                                     @endforeach
                                     @if($data->status_id == 2)
-                                    <button id="button-disable" onclick="return confirm('Are you sure?')" type="submit" name="status_id" value="5" class="btn btn-danger">
+                                    <button id="button-disable" onclick="return confirm('Are you sure?')" type="submit" name="status_id" value="5" class="btn btn-outline-danger">
                                         <i class="fa fa-edit"></i>
                                         Returning
                                     </button>

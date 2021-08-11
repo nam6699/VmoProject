@@ -10,7 +10,7 @@
                 </div>
     </div>
     </form>
-<div class="request_status" style="width:100px;">
+<div class="request_status" style="width:150px;">
   <select name="" id="statusId" class="form-control">
       <option {{( $filter == ''  ? 'selected' : '') }} value="0">all</option>
       <option {{( $filter == '1' ? 'selected' : '') }} value="1">New</option>
@@ -38,15 +38,15 @@
             <td>{{$value->totalQty}}</td>
             <td>
             @if ($value->status_id === 1)
-                    <span class="label label-info">New</span>
+                    <span class="label label-info badge badge-info"><h6>New</h6></span>
                 @elseif ($value->status_id === 2)
-                    <span class="label label-warning">accepted</span>
+                    <span class="label label-warning badge badge-primary"><h6>accepted</h6></span>
                 @elseif ($value->status_id === 3)
-                    <span class="label label-danger">Finished</span>
+                    <span class="label label-danger badge badge-success"><h6>Finished</h6></span>
                 @elseif ($value->status_id === 4)
-                    <span class="label label-danger">Cancled</span>
+                    <span class="label label-danger badge badge-danger"><h6>Cancled</h6></span>
                 @else
-                <span class="label label-danger">Returning</span>
+                <span class="label label-danger badge badge-warning"><h6>Returning</h6></span>
             @endif
             </td>
             <td>
@@ -72,7 +72,7 @@
 <script type="text/javascript">
      
         $(function () {
-          // xóa sản phẩm khỏi request
+          //delete request 
             $(document).on("click", '.remove-to-cart', function () {
                 var result = confirm("Are you sure you want to delete?");
                 if (result) {
@@ -89,11 +89,11 @@
                         console.log(response);
                         // success
                           if (response.status != 'undefined' && response.status == true) {
-                          // xóa dòng vừa được click delete
-                          $('.request-'+id).closest('tr').remove(); // class .item- ở trong class của thẻ td đã khai báo trong file index
+                          // delete row 
+                          $('.request-'+id).closest('tr').remove(); 
                           }
                         },
-                        error: function (e) { // lỗi nếu có
+                        error: function (e) { // error
                             console.log(e.message);
                         }
                     });

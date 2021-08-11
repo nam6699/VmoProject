@@ -10,16 +10,21 @@
                 </span>
                 </div>
     </div>
+    <div class="p-2" style="text-align:center;">
+    <h5> Search keyword: "{{$search}}" ({{$totalResult}})</h5>
+    </div>
     <!-- /.content-header -->
-    <div class="request_status" style="width:100px;">
-  <select name="" id="role" class="form-control">
-      <option {{( $role == ''  ? 'selected' : '') }} value="0">all</option>
-      <option {{( $role == 'user' ? 'selected' : '') }} value="user">user</option>
-      <option {{( $role == 'admin' ? 'selected' : '') }} value="admin">admin</option>
-      <option {{( $role == 'superadmin' ? 'selected' : '') }} value="superadmin">super admin</option>
-  </select>
-
-</div>
+    <div class="d-flex flex-start">
+      <a href="{{route('user.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
+      <div class="request_status" style="width:150px;">
+      <select name="" id="role" class="form-control">
+        <option {{( $role == ''  ? 'selected' : '') }} value="0">all</option>
+        <option {{( $role == 'user' ? 'selected' : '') }} value="user">user</option>
+        <option {{( $role == 'admin' ? 'selected' : '') }} value="admin">admin</option>
+        <option {{( $role == 'superadmin' ? 'selected' : '') }} value="superadmin">super admin</option>
+      </select>
+      </div>
+  </div>
     
     <!-- Main content -->
           <table class="table">

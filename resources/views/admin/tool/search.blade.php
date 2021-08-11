@@ -11,8 +11,10 @@
                 </div>
     </div>
     </form>
-    <h5>keyword: {{$keyword}}</h5>
-
+    <div class="p-2" style="text-align:center;">
+    <h5> Search keyword: "{{$keyword}}" ({{$totalResult}})</h5>
+    </div>
+    
     <!-- Main content -->
     @can('edit tools')
     <a href="{{route('tool.create')}}" class="nav-link btn btn-success" style="width:120px;" ><span class="mr-2">CREATE</span><i class="fas fa-plus"></i></a>
@@ -56,7 +58,7 @@
 
         $(function () {
     
-          //
+          //delete
             $(document).on("click", '.remove-to-cart', function () {
                 var result = confirm("Are you sure you want to delete?");
                 if (result) {
@@ -73,7 +75,7 @@
                         console.log(response);
                         // success
                           if (response.status != 'undefined' && response.status == true) {
-                          // xóa dòng vừa được click delete
+                          //  delete row
                           $('.tool-'+id).closest('tr').remove(); // class .item- ở trong class của thẻ td đã khai báo trong file index
                           }
                         },

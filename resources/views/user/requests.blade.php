@@ -30,8 +30,8 @@
                         <div class="row">
                         <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="inputName">Your Email</label>
-                                    <input type="email" name="name" class="form-control" placeholder="Enter Your Email..">
+                                    <label for="inputName">Your name</label>
+                                    <input type="name" name="name" class="form-control" placeholder="Enter Your Email..">
                                     @error('name')
                                     <span class="text-danger"> {{ $message }} </span>
                                     @enderror

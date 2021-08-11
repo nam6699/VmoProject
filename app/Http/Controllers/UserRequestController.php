@@ -217,38 +217,40 @@ class UserRequestController extends Controller
                 $user = Requests::where('user_email','LIKE','%'. $search .'%')
                                     ->where('status_id','=',1)
                                     ->paginate(12);
+                $totalResult = $user->total();
 
-            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }else if($filter == 2){
                     $user = Requests::where('user_email','LIKE','%'. $search .'%')
                                         ->where('status_id','=',2)
                                         ->paginate(12);
+                $totalResult = $user->total();
     
-                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }else if($filter == 3){
                 $user = Requests::where('user_email','LIKE','%'. $search .'%')
                                     ->where('status_id','=',3)
                                     ->paginate(12);
-
-            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+                $totalResult = $user->total();
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }
             else if($filter == 4){
                 $user = Requests::where('user_email','LIKE','%'. $search .'%')
                                     ->where('status_id','=',4)
                                     ->paginate(12);
-
-            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+                $totalResult = $user->total();
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }else if($filter == 5){
                 $user = Requests::where('user_email','LIKE','%'. $search .'%')
                                     ->where('status_id','=',5)
                                     ->paginate(12);
-
-            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+                $totalResult = $user->total();
+            return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }else{
                 $user = Requests::where('user_email','LIKE','%'. $search .'%')
                 ->paginate(12);
-
-                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search]);
+                $totalResult = $user->total();
+                return view('admin.request.search',['data'=>$user,'filter'=>$filter,'search'=>$search,'totalResult'=>$totalResult]);
             }
             
             
