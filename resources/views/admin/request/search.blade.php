@@ -41,15 +41,15 @@
             <td>{{$value->totalQty}}</td>
             <td>
             @if ($value->status_id === 1)
-                    <span class="label label-info">New</span>
+                    <span class="label label-info badge badge-info"><h6>New</h6></span>
                 @elseif ($value->status_id === 2)
-                    <span class="label label-warning">accepted</span>
+                    <span class="label label-warning badge badge-success"><h6>accepted</h6></span>
                 @elseif ($value->status_id === 3)
-                    <span class="label label-danger">Finished</span>
+                    <span class="label label-danger badge badge-success"><h6>Finished</h6></span>
                 @elseif ($value->status_id === 4)
-                    <span class="label label-danger">Cancled</span>
+                    <span class="label label-danger badge badge-danger"><h6>Cancled</h6></span>
                 @else
-                <span class="label label-danger">Returning</span>
+                <span class="label label-danger badge badge-warning"><h6>Returning</h6></span>
             @endif
             </td>
             <td>

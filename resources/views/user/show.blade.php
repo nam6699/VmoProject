@@ -41,7 +41,7 @@
                                         @foreach($status as $item)
                                             @if($value->status_id == $item->id)
                                                 @if($item->id == 2)
-                                                <td><label class="badge badge-primary"> {{ $item->name }}</label></td>
+                                                <td><label class="badge badge-success"> {{ $item->name }}</label></td>
                                                 @elseif($item->id == 3)
                                                 <td><label class="badge badge-success"> {{ $item->name }}</label></td>
                                                 @elseif($item->id == 4)

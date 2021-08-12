@@ -93,25 +93,33 @@
      <div class="row">
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <h4>Contact Us</h4>
-        <ul class="contact">
+        <ul class="contact" >
           <li><i class="fa fa-phone"> 024 3312 0103</i></li>
           <li><i class="fa fa-envelope"> info@vmogroup.com</i></li>
-          <li><i class="fa fa-map"> 15th Floor, TTC Tower,
-                  19 Duy Tan st., Dich Vong Hau ward., Cau Giay dist.,
+          <li><i class="fa fa-map"> 15th Floor, TTC Tower,<br>
+                  19 Duy Tan st., Dich Vong Hau ward.,<br>
+                   Cau Giay dist.,
                   Hanoi</i></li>
+          <li><i class="fa fa-globe"> https://www.vmogroup.jp</i></li>
         </ul>
        </div>
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
         <h4>About Us</h4>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Molestiae sequi, delectus velit eos eius beatae.</p>
+        <ul class="contact">
+          <li><a href="https://www.vmogroup.com/about-us/human-resource" target="_blank" class="text-white">Company</a></li>
+          <li><a href="https://www.vmogroup.com/about-us/technical-capability" target="_blank" class="text-white">Technical Capability</a></li>
+          <li><a href="https://www.vmogroup.com/about-us/ceo-statement" target="_blank" class="text-white">CEO Statement</a></li>
+          <li><a href="https://www.vmogroup.com/about-us/our-process" target="_blank" class="text-white">Our Process</a></li>
+        </ul>
        </div>
        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-        <h4>NewsLetter</h4>
-       <p>Lorem ipsum dolor sit.</p>
-       <form action="">
-         <input type="text" name="email" placeholder="enter email...">
-         <button type="submit" >submit</button>
-       </form>
+        <h4>Service</h4>
+        <ul class="contact">
+          <li><a href="https://www.vmogroup.com/services/odc" target="_blank" class="text-white">Offshore Development Center</a></li>
+          <li><a href="https://www.vmogroup.com/services/web-and-web-app-development" target="_blank" class="text-white">Web Application Development</a></li>
+          <li><a href="https://www.vmogroup.com/services/iot" target="_blank" class="text-white">Internet of Things</a></li>
+          <li><a href="https://www.vmogroup.com/services/ai" target="_blank" class="text-white">Artificial Intelligence</a></li>
+        </ul>
        </div>
      </div>
    </div>

@@ -131,53 +131,53 @@ class RequestController extends Controller
 
                 }
         }
-                    //save user request to db
-                    DB::transaction(function () use($UserRequest, $request) {
-                    $saveRequest = new Requests();
-                    $saveRequest->user_email = Auth::user()->email;
-                    $saveRequest->totalQty = $UserRequest->totalQty;
-                    $saveRequest->status_id = 1; //new
-                    $saveRequest->user_id = Auth::user()->id;
-                    $saveRequest->receiver_email = $request->email;
-                    if($saveRequest->save()){
-                        $id_request = $saveRequest->id;
-                        foreach($UserRequest->items as $item) {
-                            
-                            $_detail = new RequestDetail();
-                            $_detail->user_requests_id = $id_request;
-                            $_detail->name = $item['item']->name;
-                            $_detail->item_id = $item['item']->id;
-                            $_detail->quanity = $item['qty'];
-                            $_detail->image = $item['item']->image;
-                            $_detail->save();
-            
-                        }
-                        foreach($UserRequest->items as $item)
-                        {
-                            $request_tool = new RequestTool();
-                            $request_tool->tool_id = $item['item']->id;
-                            $request_tool->user_requests_id = $id_request;
-                            $request_tool->save();
-                        }
-                    }
-                     //send email
-                    $request->validate([
-                        'email' => 'required|email',
-                        'subject' => 'required',
-                        'name' => 'required',
-                        'content' => 'required',
-                    ]);
-            
-                    $data = [
-                        'subject' => $request->subject,
-                        'name' => $request->name,
-                        'email' => $request->email,
-                        'content' => $request->content,
-                        'url'=>route('request.edit',$saveRequest->id)
-                    ];
-                    SendEmail::dispatch($data);
-                    $request->session()->forget('UserRequest');
-                    });
+        //save user request to db
+        DB::transaction(function () use($UserRequest, $request) {
+        $saveRequest = new Requests();
+        $saveRequest->user_email = Auth::user()->email;
+        $saveRequest->totalQty = $UserRequest->totalQty;
+        $saveRequest->status_id = 1; //new
+        $saveRequest->user_id = Auth::user()->id;
+        $saveRequest->receiver_email = $request->email;
+        if($saveRequest->save()){
+            $id_request = $saveRequest->id;
+            foreach($UserRequest->items as $item) {
+                
+                $_detail = new RequestDetail();
+                $_detail->user_requests_id = $id_request;
+                $_detail->name = $item['item']->name;
+                $_detail->item_id = $item['item']->id;
+                $_detail->quanity = $item['qty'];
+                $_detail->image = $item['item']->image;
+                $_detail->save();
+
+            }
+            foreach($UserRequest->items as $item)
+            {
+                $request_tool = new RequestTool();
+                $request_tool->tool_id = $item['item']->id;
+                $request_tool->user_requests_id = $id_request;
+                $request_tool->save();
+            }
+        }
+            //send email
+        $request->validate([
+            'email' => 'required|email',
+            'subject' => 'required',
+            'name' => 'required',
+            'content' => 'required',
+        ]);
+
+        $data = [
+            'subject' => $request->subject,
+            'name' => $request->name,
+            'email' => $request->email,
+            'content' => $request->content,
+            'url'=>route('request.edit',$saveRequest->id)
+        ];
+        SendEmail::dispatch($data);
+        $request->session()->forget('UserRequest');
+        });
        
         return redirect()->route('show.request',['id'=>Auth::user()->id])->with(['msg' => 'Request successfully sent!']);
     }

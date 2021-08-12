@@ -25,9 +25,7 @@
             <th scope="col">Name</th>
             <th scope="col">Image</th>
             <th scope="col">Quanity</th>
-            @can('edit tools')
             <th scope="col">Action</th>
-            @endcan
         </thead>
         <tbody>
           @foreach($tool as $value)
@@ -36,13 +34,14 @@
             <td>{{$value->name}}</td>
             <td><img src="{{asset('images/'.$value->image)}}" alt="" width=50 height=50></td>
             <td>{{$value->quanity}}</td>
-            @can('edit tools')
+            
             <td>
               <a href="{{route('tool.edit', ['tool'=>$value->id])}}" class="btn btn-primary">Edit</a>
-                
-            <a data-id="{{$value->id}}" href="javascript:void(0)" class="remove-to-cart btn btn-danger" class="text-dark ">Delete</a>
-            </td>
+            @can('edit tools') 
+              <a data-id="{{$value->id}}" href="javascript:void(0)" class="remove-to-cart btn btn-danger" class="text-dark ">Delete</a>
             @endcan
+            </td>
+            
           </tr>
           @endforeach
         </tbody>

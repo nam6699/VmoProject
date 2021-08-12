@@ -40,7 +40,7 @@
             @if ($value->status_id === 1)
                     <span class="label label-info badge badge-info"><h6>New</h6></span>
                 @elseif ($value->status_id === 2)
-                    <span class="label label-warning badge badge-primary"><h6>accepted</h6></span>
+                    <span class="label label-warning badge badge-success"><h6>accepted</h6></span>
                 @elseif ($value->status_id === 3)
                     <span class="label label-danger badge badge-success"><h6>Finished</h6></span>
                 @elseif ($value->status_id === 4)
