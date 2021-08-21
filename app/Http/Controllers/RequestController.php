@@ -163,9 +163,9 @@ class RequestController extends Controller
             //send email
         $request->validate([
             'email' => 'required|email',
-            'subject' => 'required',
-            'name' => 'required',
-            'content' => 'required',
+            'subject' => 'required|string',
+            'name' => 'required|string',
+            'content' => 'required|string',
         ]);
 
         $data = [

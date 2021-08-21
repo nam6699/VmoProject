@@ -361,7 +361,7 @@
                             {{ __('A fresh mail has been sent to your email address.') }}
                         </div>
                          @endif
-                         <p>{!! $content !!}</p>
+                         <p>{!! htmlentities($content) !!}</p>
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
                             <tr>

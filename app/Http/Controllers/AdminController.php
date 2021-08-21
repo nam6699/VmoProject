@@ -58,12 +58,6 @@ class AdminController extends Controller
             'password'=>'required',
             'role'=>'required'
         ]);
-        $email = User::all();
-        foreach($email as $useremail){
-            if($useremail = $request->email){
-                return redirect()->back()->with('error','email already exist');
-            }
-        }
         $user = User::create($request->except('_token', 'role'));
 
         $user->roles()->sync($request->role);
